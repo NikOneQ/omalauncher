@@ -24,24 +24,28 @@ enum class LaunchStyle(
     val homeAlpha: Float,
     /** For [Origin.Icon], the share of the motion over which the window fades in over the icon; for the others, where it starts: its scale (Screen) or how far below (Slide, in screen heights). */
     val lead: Float,
+    /** How much home blurs behind the app, in dp at full strength (animations.blur 1). */
+    val blurDp: Float,
+    /** The shadow under the opening window, in dp. */
+    val shadowDp: Float,
 ) {
-    /** A spring with a visible bounce out of the icon; home sinks back and darkens, as on iPhones. */
-    IOS("ios", Origin.Icon, Curve.Spring(response = 0.55f, damping = 0.76f), homeZoom = 0.14f, homeAlpha = 0.5f, lead = 0.10f),
+    /** iOS 27: a spring with a visible bounce out of the icon, home sinking back, darkening and blurring behind it like Liquid Glass. */
+    IOS("ios", Origin.Icon, Curve.Spring(response = 0.55f, damping = 0.76f), homeZoom = 0.14f, homeAlpha = 0.55f, lead = 0.10f, blurDp = 30f, shadowDp = 28f),
 
-    /** Quick and firm, no bounce to speak of, home dimming a little, as on OPPO and OnePlus phones. */
-    COLOROS("coloros", Origin.Icon, Curve.Spring(response = 0.30f, damping = 0.97f), homeZoom = 0.08f, homeAlpha = 0.8f, lead = 0.05f),
+    /** ColorOS 17: quick and firm, no bounce to speak of, home dimming and blurring a little behind a lifted window. */
+    COLOROS("coloros", Origin.Icon, Curve.Spring(response = 0.30f, damping = 0.97f), homeZoom = 0.08f, homeAlpha = 0.8f, lead = 0.05f, blurDp = 18f, shadowDp = 16f),
 
-    /** Material's emphasized easing, no bounce, the app cross-fading in over the icon slowly; home stays put, as on Pixels. */
-    PIXEL("pixel", Origin.Icon, Curve.Eased(520, 0.05f, 0.7f, 0.1f, 1f), homeZoom = 0f, homeAlpha = 1f, lead = 0.35f),
+    /** Android 17 on Pixels: Material 3 Expressive's bouncy spring, the app cross-fading in over the icon slowly, home staying put while it blurs, as Beta 3 added. */
+    PIXEL("pixel", Origin.Icon, Curve.Spring(response = 0.50f, damping = 0.72f), homeZoom = 0f, homeAlpha = 0.85f, lead = 0.35f, blurDp = 24f, shadowDp = 10f),
 
     /** Stock One UI: out of the icon on a critically damped spring, home easing back a touch. */
-    ONEUI("oneui", Origin.Icon, Curve.Spring(response = 0.42f, damping = 1f), homeZoom = 0.05f, homeAlpha = 0.9f, lead = 0.12f),
+    ONEUI("oneui", Origin.Icon, Curve.Spring(response = 0.42f, damping = 1f), homeZoom = 0.05f, homeAlpha = 0.9f, lead = 0.12f, blurDp = 8f, shadowDp = 12f),
 
     /** The app fades in over home, growing from 86%. */
-    FADE("fade", Origin.Screen, Curve.Eased(320, 0.2f, 0f, 0f, 1f), homeZoom = 0f, homeAlpha = 0.6f, lead = 0.86f),
+    FADE("fade", Origin.Screen, Curve.Eased(320, 0.2f, 0f, 0f, 1f), homeZoom = 0f, homeAlpha = 0.6f, lead = 0.86f, blurDp = 16f, shadowDp = 0f),
 
     /** The app slides up from the bottom of the screen. */
-    SLIDE("slide", Origin.Slide, Curve.Eased(420, 0.05f, 0.7f, 0.1f, 1f), homeZoom = 0.06f, homeAlpha = 0.8f, lead = 1f),
+    SLIDE("slide", Origin.Slide, Curve.Eased(420, 0.05f, 0.7f, 0.1f, 1f), homeZoom = 0.06f, homeAlpha = 0.8f, lead = 1f, blurDp = 12f, shadowDp = 20f),
     ;
 
     enum class Origin { Icon, Screen, Slide }

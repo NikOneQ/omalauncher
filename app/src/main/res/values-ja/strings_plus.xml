@@ -24,4 +24,5 @@
     <string name="style_animation_speed">速さ</string>
     <string name="style_animation_corners">角の丸み</string>
     <string name="style_animation_module">Omalauncher+ の KernelSU モジュールで完全に再生。なしでは単純な拡大</string>
+    <string name="style_animation_blur">ぼかし</string>
 </resources>

@@ -3,6 +3,7 @@ package dev.omalauncher
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.view.MotionEvent
+import dev.omalauncher.anim.HomeArrival
 import dev.omalauncher.anim.LaunchAnimations
 import android.app.role.RoleManager
 import android.content.Intent
@@ -212,6 +213,8 @@ class MainActivity : ComponentActivity() {
     /** Widgets only refresh while the home screen is visible. */
     override fun onStart() {
         super.onStart()
+        // Omalauncher+: back from an app (or the screen turning on): home comes back in animations.style's way.
+        if (away) HomeArrival.arrived()
         runtime.widgets.homeStarted()
         runtime.screenStarted()
         BrowserPages.started(true)

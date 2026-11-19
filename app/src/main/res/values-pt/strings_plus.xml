@@ -24,4 +24,5 @@
     <string name="style_animation_speed">velocidade</string>
     <string name="style_animation_corners">cantos</string>
     <string name="style_animation_module">completa com o módulo KernelSU do Omalauncher+; sem ele, um aumento simples</string>
+    <string name="style_animation_blur">desfoque</string>
 </resources>

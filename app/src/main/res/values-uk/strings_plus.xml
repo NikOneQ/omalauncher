@@ -24,4 +24,5 @@
     <string name="style_animation_speed">швидкість</string>
     <string name="style_animation_corners">заокруглення</string>
     <string name="style_animation_module">повністю працює з модулем Omalauncher+ для KernelSU; без нього — просте збільшення</string>
+    <string name="style_animation_blur">розмиття</string>
 </resources>

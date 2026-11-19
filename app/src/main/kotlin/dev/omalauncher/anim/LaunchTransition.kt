@@ -34,6 +34,9 @@ internal class LaunchTransition(
     /** The window's corner radius in pixels as it reaches full size. */
     private val cornerPx: Float,
     private val ownPackage: String,
+    private val density: Float,
+    /** animations.blur: how strongly home blurs behind the app, 1 as the style has it. */
+    private val blurScale: Float,
 ) : IRemoteTransition.Stub() {
     private val main = Handler(Looper.getMainLooper())
 
@@ -67,6 +70,9 @@ internal class LaunchTransition(
         transition: IBinder?,
         aborted: Boolean,
     ) {}
+
+    private var blur: SurfaceControl? = null
+    private var blurPx = 0f
 
     private class Window(
         val leash: SurfaceControl,
@@ -114,6 +120,17 @@ internal class LaunchTransition(
             return
         }
         Log.i(TAG, "playing ${style.key} at $speed: ${opening.size} opening, ${home.size} home, ${style.curve.durationMs(speed)} ms")
+        // Home blurs behind the app: an effect layer just under its window, over home and the wallpaper.
+        val blurPx = style.blurDp * blurScale * density
+        val root = runCatching { info.getRoot(0).leash }.getOrNull()
+        val blur = if (blurPx > 0 && root != null) effectLayer(root) else null
+        blur?.let {
+            t.setVisibility(it, true)
+            t.setCrop(it, Rect(target.end))
+            relativeLayer(t, it, target.leash, -1)
+        }
+        this.blur = blur
+        this.blurPx = blurPx
         frame(t, target, home, 0f)
         t.apply()
         val animator = ValueAnimator.ofFloat(0f, 1f)
@@ -130,7 +147,9 @@ internal class LaunchTransition(
                     val tx = SurfaceControl.Transaction()
                     reset(tx, target)
                     home.forEach { reset(tx, it) }
+                    blur?.let { tx.reparent(it, null) }
                     tx.apply()
+                    blur?.release()
                     done(finish)
                 }
             },
@@ -166,6 +185,7 @@ internal class LaunchTransition(
         val radius =
             if (style.origin == LaunchStyle.Origin.Icon) lerp(from.width() * ICON_CORNER, cornerPx, min(p, 1f)) else cornerPx
         cornerRadius(tx, app.leash, radius / s)
+        if (style.shadowDp > 0) shadowRadius(tx, app.leash, style.shadowDp * density / s)
         tx.setAlpha(
             app.leash,
             when (style.origin) {
@@ -174,6 +194,7 @@ internal class LaunchTransition(
             },
         )
         val q = min(max(p, 0f), 1f)
+        blur?.let { blurRadius(tx, it, (blurPx * q).toInt()) }
         val zoom = 1 - style.homeZoom * q
         for (h in home) {
             tx.setAlpha(h.leash, lerp(1f, style.homeAlpha, q))
@@ -186,6 +207,7 @@ internal class LaunchTransition(
         tx: SurfaceControl.Transaction,
         w: Window,
     ) {
+        shadowRadius(tx, w.leash, 0f)
         tx.setCrop(w.leash, Rect(0, 0, w.width, w.height))
         tx.setScale(w.leash, 1f, 1f)
         tx.setPosition(w.leash, w.baseX, w.baseY)
@@ -214,6 +236,38 @@ internal class LaunchTransition(
                 SurfaceControl.Transaction::class.java.getMethod("setCornerRadius", SurfaceControl::class.java, Float::class.javaPrimitiveType)
             }.onFailure { Log.w(TAG, "no rounded corners", it) }.getOrNull()
         }
+
+        private fun hidden(
+            name: String,
+            vararg types: Class<*>?,
+        ): Method? =
+            runCatching { SurfaceControl.Transaction::class.java.getMethod(name, *types) }
+                .onFailure { Log.w(TAG, "no $name", it) }
+                .getOrNull()
+
+        private val setBackgroundBlurRadius by lazy { hidden("setBackgroundBlurRadius", SurfaceControl::class.java, Int::class.javaPrimitiveType) }
+        private val setShadowRadius by lazy { hidden("setShadowRadius", SurfaceControl::class.java, Float::class.javaPrimitiveType) }
+        private val setRelativeLayer by lazy { hidden("setRelativeLayer", SurfaceControl::class.java, SurfaceControl::class.java, Int::class.javaPrimitiveType) }
+
+        private fun blurRadius(tx: SurfaceControl.Transaction, sc: SurfaceControl, radius: Int) {
+            runCatching { setBackgroundBlurRadius?.invoke(tx, sc, radius) }
+        }
+
+        private fun shadowRadius(tx: SurfaceControl.Transaction, sc: SurfaceControl, radius: Float) {
+            runCatching { setShadowRadius?.invoke(tx, sc, radius) }
+        }
+
+        private fun relativeLayer(tx: SurfaceControl.Transaction, sc: SurfaceControl, relativeTo: SurfaceControl, z: Int) {
+            runCatching { setRelativeLayer?.invoke(tx, sc, relativeTo, z) }
+        }
+
+        /** A layer that draws nothing but can blur what's under it, in [parent]. */
+        private fun effectLayer(parent: SurfaceControl): SurfaceControl? =
+            runCatching {
+                val b = SurfaceControl.Builder().setName("OmalauncherPlusBlur").setParent(parent)
+                SurfaceControl.Builder::class.java.getMethod("setEffectLayer").invoke(b)
+                b.build()
+            }.onFailure { Log.w(TAG, "no blur layer", it) }.getOrNull()
 
         private fun cornerRadius(
             tx: SurfaceControl.Transaction,

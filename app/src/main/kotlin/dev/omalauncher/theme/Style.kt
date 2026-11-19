@@ -160,6 +160,7 @@ class Style(
             )
         val ANIMATION_SPEED = Setting.Number("animations.speed", 1.0, 0.25..3.0, "How fast apps open: 1 as the style has it, 2 twice as fast, 0.5 half as fast.")
         val ANIMATION_CORNERS = Setting.Number("animations.corners", 28.0, 0.0..60.0, "The opening app's corner radius in dp as it reaches full size.")
+        val ANIMATION_BLUR = Setting.Number("animations.blur", 1.0, 0.0..2.0, "How strongly home blurs behind an opening app and as it comes back: 1 as the style has it, 0 not at all, 2 twice as much.")
 
         /** Omalauncher+: see SystemWallpaperSync. */
         val WALLPAPER_SYNC =
@@ -291,7 +292,7 @@ object StyleFile {
     val ALL: List<Setting<*>> =
         with(Style) {
             listOf(THEME, BACKGROUND, FONT, APP_TILES, RECENT_APPS, EMPTY_PAGE_LEFT, EMPTY_PAGE_RIGHT, HOME_PAGE, COLUMNS, FORCE_SINGLE_PAGE, COVER_SCREEN, UNFOLDED_LAYOUT, UNFOLDED_COLUMNS, GAPS_IN, GAPS_OUT, TILE_OPACITY, TILE_FROST, TILE_BORDER_WIDTH, TILE_BORDER, TILE_BORDER_FOCUSED) +
-                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC, ANIMATION_STYLE, ANIMATION_SPEED, ANIMATION_CORNERS) +
+                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC, ANIMATION_STYLE, ANIMATION_SPEED, ANIMATION_CORNERS, ANIMATION_BLUR) +
                 listOf(STATUS_BAR_SHOWN) + STATUS_BAR.all + NAVIGATION_BAR.all + listOf(TERMINAL_FONT, TERMINAL_TEXT, TERMINAL_SUGGESTIONS, SWIPE_UP, SWIPE_DOWN)
         }
 

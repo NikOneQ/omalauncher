@@ -68,6 +68,7 @@ import dev.omalauncher.widgets.render.Backdrop
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import dev.omalauncher.R
+import dev.omalauncher.anim.homeArrival
 import dev.omalauncher.widgets.render.LocalBackdrop
 import dev.omalauncher.widgets.render.LocalHomeCovered
 import dev.omalauncher.widgets.render.LocalInputFocus
@@ -145,7 +146,8 @@ private fun DesktopScreen(
     val backdrop = remember(runtime, state) { Backdrop({ runtime.themes.background }, { state.wallpaperOffset }) }
     CompositionLocalProvider(LocalHomeCovered provides covered, LocalBackdrop provides backdrop) {
         // The whole window: a face fills it, and tiles keep clear of the system bars and the bar themselves.
-        HomeScreen(runtime, state, Modifier.fillMaxSize())
+        // Omalauncher+: comes back after an app in animations.style's way (HomeArrival).
+        HomeScreen(runtime, state, Modifier.fillMaxSize().homeArrival())
     }
     HomeMenu(runtime, state)
 

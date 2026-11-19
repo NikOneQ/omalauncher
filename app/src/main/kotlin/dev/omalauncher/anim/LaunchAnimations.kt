@@ -76,7 +76,8 @@ object LaunchAnimations {
         if (privileged(context)) {
             runCatching {
                 val corner = LauncherStyle.style[Style.ANIMATION_CORNERS].toFloat() * density
-                val transition = LaunchTransition(origin, style, speed, corner, context.packageName)
+                val blur = LauncherStyle.style[Style.ANIMATION_BLUR].toFloat()
+                val transition = LaunchTransition(origin, style, speed, corner, context.packageName, density, blur)
                 val remote = RemoteTransition(transition, "OmalauncherPlusLaunch")
                 val make = ActivityOptions::class.java.getMethod("makeRemoteTransition", RemoteTransition::class.java)
                 return Launch((make.invoke(null, remote) as ActivityOptions).toBundle(), noAnimation = false)

@@ -25,4 +25,5 @@
     <string name="style_animation_speed">speed</string>
     <string name="style_animation_corners">corners</string>
     <string name="style_animation_module">plays in full with the Omalauncher+ KernelSU module; without it, a simpler scale-up</string>
+    <string name="style_animation_blur">blur</string>
 </resources>

@@ -24,4 +24,5 @@
     <string name="style_animation_speed">vitesse</string>
     <string name="style_animation_corners">coins</string>
     <string name="style_animation_module">complète avec le module KernelSU d\'Omalauncher+ ; sans lui, un simple agrandissement</string>
+    <string name="style_animation_blur">flou</string>
 </resources>

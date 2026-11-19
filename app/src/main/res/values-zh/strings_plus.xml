@@ -24,4 +24,5 @@
     <string name="style_animation_speed">速度</string>
     <string name="style_animation_corners">圆角</string>
     <string name="style_animation_module">配合 Omalauncher+ 的 KernelSU 模块可完整播放；没有它则为简单放大</string>
+    <string name="style_animation_blur">模糊</string>
 </resources>
