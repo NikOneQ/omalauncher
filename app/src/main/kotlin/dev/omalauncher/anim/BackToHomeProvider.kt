@@ -4,6 +4,7 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 
 /**
@@ -13,7 +14,10 @@ import android.os.Bundle
  */
 class BackToHomeProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        context?.let(BackToHome::init)
+        context?.let {
+            BackToHome.init(it)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) CloseToHome.init(it)
+        }
         return true
     }
 
@@ -26,6 +30,7 @@ class BackToHomeProvider : ContentProvider() {
         return Bundle().apply {
             putBinder("callback", BackToHome.callback.asBinder())
             putBinder("runner", BackToHome.runner.asBinder())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) putBinder("close", CloseToHome.transition.asBinder())
         }
     }
 

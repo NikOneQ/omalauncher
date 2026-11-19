@@ -28,7 +28,8 @@ import kotlin.math.min
  */
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 internal class LaunchTransition(
-    private val from: RectF,
+    /** The icon the app grows out of, or for [closing] flies back into; null finds it by the closing app (LaunchAnimations.originOf). */
+    private var from: RectF?,
     private val style: LaunchStyle,
     private val speed: Float,
     /** The window's corner radius in pixels as it reaches full size. */
@@ -37,6 +38,8 @@ internal class LaunchTransition(
     private val density: Float,
     /** animations.blur: how strongly home blurs behind the app, 1 as the style has it. */
     private val blurScale: Float,
+    /** Played backwards for an app closing to home (CloseToHome): out of the screen into its icon. */
+    private val closing: Boolean = false,
 ) : IRemoteTransition.Stub() {
     private val main = Handler(Looper.getMainLooper())
 
@@ -85,6 +88,7 @@ internal class LaunchTransition(
         val end: Rect,
         /** A whole task, rather than a part of one (an embedded activity's TaskFragment, as WhatsApp opens with on foldables). */
         val isTask: Boolean,
+        val pkg: String?,
     )
 
     private fun play(
@@ -99,14 +103,16 @@ internal class LaunchTransition(
                 val leash = change.leash ?: continue
                 val end = change.endAbsBounds
                 val offset = change.endRelOffset
-                val w = Window(leash, offset.x.toFloat(), offset.y.toFloat(), end.width(), end.height(), Rect(end), change.taskInfo != null)
                 val pkg = change.taskInfo?.baseActivity?.packageName ?: change.taskInfo?.topActivity?.packageName
-                when (change.mode) {
-                    TRANSIT_OPEN, TRANSIT_TO_FRONT -> {
-                        t.setVisibility(leash, true)
-                        if (pkg != ownPackage) opening += w else home += w
-                    }
-                    TRANSIT_CLOSE, TRANSIT_TO_BACK -> if (pkg == ownPackage) home += w
+                val w = Window(leash, offset.x.toFloat(), offset.y.toFloat(), end.width(), end.height(), Rect(end), change.taskInfo != null, pkg)
+                val arriving = change.mode == TRANSIT_OPEN || change.mode == TRANSIT_TO_FRONT
+                val leaving = change.mode == TRANSIT_CLOSE || change.mode == TRANSIT_TO_BACK
+                if (arriving || closing && leaving) t.setVisibility(leash, true)
+                when {
+                    // Opening: the app arrives over home. Closing: the app leaves, home arrives.
+                    !closing && arriving && pkg != ownPackage -> opening += w
+                    closing && leaving && pkg != ownPackage -> opening += w
+                    pkg == ownPackage && (arriving || leaving) -> home += w
                 }
             }
         } catch (e: Throwable) {
@@ -119,7 +125,9 @@ internal class LaunchTransition(
             done(finish)
             return
         }
-        Log.i(TAG, "playing ${style.key} at $speed: ${opening.size} opening, ${home.size} home, ${style.curve.durationMs(speed)} ms")
+        val icon = from ?: LaunchAnimations.originOf(target.pkg) ?: centerIcon(target.end)
+        from = icon
+        Log.i(TAG, "playing ${style.key}${if (closing) " backwards" else ""} at $speed: ${opening.size} opening, ${home.size} home, ${style.curve.durationMs(speed)} ms")
         // Home blurs behind the app: an effect layer just under its window, over home and the wallpaper.
         val blurPx = style.blurDp * blurScale * density
         val root = runCatching { info.getRoot(0).leash }.getOrNull()
@@ -131,21 +139,23 @@ internal class LaunchTransition(
         }
         this.blur = blur
         this.blurPx = blurPx
-        frame(t, target, home, 0f)
+        frame(t, target, home, if (closing) 1f else 0f)
         t.apply()
         val animator = ValueAnimator.ofFloat(0f, 1f)
         animator.duration = style.curve.durationMs(speed)
         animator.interpolator = style.curve.interpolator(speed)
         animator.addUpdateListener {
             val tx = SurfaceControl.Transaction()
-            frame(tx, target, home, it.animatedValue as Float)
+            val v = it.animatedValue as Float
+            frame(tx, target, home, if (closing) 1 - v else v)
             tx.apply()
         }
         animator.addListener(
             object : AnimatorListenerAdapter() {
                 override fun onAnimationEnd(animation: Animator) {
                     val tx = SurfaceControl.Transaction()
-                    reset(tx, target)
+                    // A closed app stays hidden until Android takes it away; an opened one is left whole.
+                    if (closing) tx.setAlpha(target.leash, 0f) else reset(tx, target)
                     home.forEach { reset(tx, it) }
                     blur?.let { tx.reparent(it, null) }
                     tx.apply()
@@ -164,6 +174,7 @@ internal class LaunchTransition(
         home: List<Window>,
         p: Float,
     ) {
+        val from = this.from ?: return
         val end = app.end
         val rect =
             when (style.origin) {
@@ -227,6 +238,12 @@ internal class LaunchTransition(
         private const val TRANSIT_CLOSE = 2
         private const val TRANSIT_TO_FRONT = 3
         private const val TRANSIT_TO_BACK = 4
+
+        /** Where an app with no icon on record flies to: an icon's size in the middle of the screen. */
+        private fun centerIcon(b: Rect): RectF {
+            val size = b.width() * 0.15f
+            return RectF(b.exactCenterX() - size / 2, b.exactCenterY() - size / 2, b.exactCenterX() + size / 2, b.exactCenterY() + size / 2)
+        }
 
         /** An icon's corner radius as a share of its width, about a squircle's. */
         private const val ICON_CORNER = 0.24f

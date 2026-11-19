@@ -32,9 +32,20 @@ object HomeArrival {
     var returns by mutableIntStateOf(0)
         private set
 
+    /** Bumped when a closing transition already brought home forward (CloseToHome): a return under way stops. */
+    var settled by mutableIntStateOf(0)
+        private set
+
+    private var settledAt = 0L
+
+    fun settle() {
+        settledAt = android.os.SystemClock.uptimeMillis()
+        settled++
+    }
+
     fun arrived() {
         // A back gesture brought home back and already played its part (BackToHome).
-        if (BackToHome.active) return
+        if (BackToHome.active || android.os.SystemClock.uptimeMillis() - settledAt < 1500) return
         returns++
     }
 }
@@ -52,6 +63,8 @@ fun Modifier.homeArrival(): Modifier {
         progress.snapTo(0f)
         progress.animateTo(1f, arrivalSpec(style.curve, speed))
     }
+    val settled = HomeArrival.settled
+    LaunchedEffect(settled) { if (settled > 0) progress.snapTo(1f) }
     if (style == null) return this
     val blurPx = with(LocalDensity.current) { style.blurDp.dp.toPx() } * blurScale
     return graphicsLayer {
