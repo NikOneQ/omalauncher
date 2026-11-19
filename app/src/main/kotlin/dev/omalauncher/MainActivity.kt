@@ -3,6 +3,7 @@ package dev.omalauncher
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.view.MotionEvent
+import dev.omalauncher.anim.BackToHomeProvider
 import dev.omalauncher.anim.HomeArrival
 import dev.omalauncher.anim.LaunchAnimations
 import android.app.role.RoleManager
@@ -75,6 +76,8 @@ class MainActivity : ComponentActivity() {
         }
         applySystemBars(this, Palette.isLight)
         runtime.start()
+        // Omalauncher+: SystemUI's Vector module picks up the back-to-home animation again (BackToHomeProvider).
+        sendBroadcast(Intent(BackToHomeProvider.READY).setPackage(BackToHomeProvider.SYSTEM_UI))
         state.onSettings = { page, homePage -> runtime.openSettings(page, homePage) }
         setContent {
             KeyIndicated { LauncherRoot(runtime, state) }

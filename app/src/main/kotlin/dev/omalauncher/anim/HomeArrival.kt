@@ -33,6 +33,8 @@ object HomeArrival {
         private set
 
     fun arrived() {
+        // A back gesture brought home back and already played its part (BackToHome).
+        if (BackToHome.active) return
         returns++
     }
 }

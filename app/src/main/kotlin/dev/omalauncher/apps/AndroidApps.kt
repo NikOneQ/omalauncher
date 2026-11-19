@@ -347,7 +347,7 @@ class AndroidAppCatalog(
             if (user == Process.myUserHandle()) {
                 // As Launcher3 does for its own profile. Omalauncher+: opened with animations.style's animation
                 // (LaunchAnimations), or none at all for "none", which only an intent can ask for.
-                val launch = LaunchAnimations.options(context)
+                val launch = LaunchAnimations.options(context, component.packageName)
                 context.startActivity(
                     Intent(Intent.ACTION_MAIN)
                         .addCategory(Intent.CATEGORY_LAUNCHER)
@@ -359,7 +359,7 @@ class AndroidAppCatalog(
                     launch.options,
                 )
             } else {
-                launcherApps.startMainActivity(component, user, null, LaunchAnimations.options(context).options)
+                launcherApps.startMainActivity(component, user, null, LaunchAnimations.options(context, component.packageName).options)
             }
         }.onFailure { Log.w(TAG, "cannot open $component in $user", it) }
     }

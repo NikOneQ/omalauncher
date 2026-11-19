@@ -54,9 +54,10 @@ object LaunchAnimations {
             context.checkSelfPermission(PERMISSION) == PackageManager.PERMISSION_GRANTED &&
             hiddenApis
 
-    private val hiddenApis: Boolean by lazy {
+    /** The framework's hidden window classes, reachable once; also for the back-to-home animation (BackToHome). */
+    val hiddenApis: Boolean by lazy {
         Build.VERSION.SDK_INT < Build.VERSION_CODES.P ||
-            runCatching { HiddenApiBypass.addHiddenApiExemptions("Landroid/window/", "Landroid/view/SurfaceControl", "Landroid/app/ActivityOptions;") }
+            runCatching { HiddenApiBypass.addHiddenApiExemptions("Landroid/window/", "Landroid/view/SurfaceControl", "Landroid/view/RemoteAnimationTarget", "Landroid/view/IRemoteAnimation", "Landroid/app/ActivityOptions;") }
                 .onFailure { Log.w(TAG, "hidden APIs out of reach", it) }
                 .getOrDefault(false)
     }
@@ -65,7 +66,15 @@ object LaunchAnimations {
      * What to start an app with: the options for its opening, or null with [noAnimation] true for "none", or null and
      * false for Android's own ("system").
      */
-    fun options(context: Context): Launch {
+    /** Where each app last opened from on home, by package: back-to-home flies it back there (BackToHome). */
+    private val origins = java.util.concurrent.ConcurrentHashMap<String, RectF>()
+
+    fun originOf(packageName: String?): RectF? = packageName?.let { origins[it] }
+
+    fun options(
+        context: Context,
+        packageName: String? = null,
+    ): Launch {
         val key = LauncherStyle.style[Style.ANIMATION_STYLE]
         Log.i(TAG, "opening with animations.style \"$key\", speed ${LauncherStyle.style[Style.ANIMATION_SPEED]}, privileged ${privileged(context)}")
         if (key == LaunchStyle.NONE) return Launch(null, noAnimation = true)
@@ -73,6 +82,7 @@ object LaunchAnimations {
         val speed = LauncherStyle.style[Style.ANIMATION_SPEED].toFloat().coerceIn(0.1f, 5f)
         val density = context.resources.displayMetrics.density
         val origin = origin(context, density)
+        if (packageName != null) origins[packageName] = RectF(origin)
         if (privileged(context)) {
             runCatching {
                 val corner = LauncherStyle.style[Style.ANIMATION_CORNERS].toFloat() * density
