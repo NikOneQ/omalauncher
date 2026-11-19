@@ -95,7 +95,7 @@ internal class LaunchTransition(
                 val pkg = change.taskInfo?.baseActivity?.packageName ?: change.taskInfo?.topActivity?.packageName
                 when (change.mode) {
                     TRANSIT_OPEN, TRANSIT_TO_FRONT -> {
-                        t.show(leash)
+                        t.setVisibility(leash, true)
                         if (pkg != ownPackage) opening += w else home += w
                     }
                     TRANSIT_CLOSE, TRANSIT_TO_BACK -> if (pkg == ownPackage) home += w
