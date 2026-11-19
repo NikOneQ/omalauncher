@@ -6,6 +6,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.RectF
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -16,6 +17,7 @@ import android.view.SurfaceControl
 import android.window.BackMotionEvent
 import android.window.IBackAnimationHandoffHandler
 import android.window.IOnBackInvokedCallback
+import androidx.annotation.RequiresApi
 import dev.omalauncher.theme.Style
 import dev.omalauncher.ui.LauncherStyle
 import java.lang.reflect.Method
@@ -74,16 +76,16 @@ object BackToHome {
                 main.post {
                     progress = p
                     touchY = y
-                    follow()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) follow()
                 }
             }
 
             override fun onBackCancelled() {
-                main.post { settle(home = false) }
+                main.post { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) settle(home = false) else finish() }
             }
 
             override fun onBackInvoked() {
-                main.post { settle(home = true) }
+                main.post { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) settle(home = true) else finish() }
             }
 
             override fun setTriggerBack(triggerBack: Boolean) {}
@@ -109,7 +111,7 @@ object BackToHome {
                     home = all.firstOrNull { it.mode == RemoteAnimationTarget.MODE_OPENING }
                     finished = finishedCallback
                     Log.i(TAG, "back to home from ${app?.packageName()}: ${all.size} targets")
-                    follow()
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) follow()
                 }
             }
 
@@ -126,6 +128,7 @@ object BackToHome {
     private val density get() = context?.resources?.displayMetrics?.density ?: 3f
 
     /** The window while the finger moves: smaller as the gesture goes on, nudged away from the edge and after the finger. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun follow() {
         val app = app ?: return
         val b = app.screenSpaceBounds ?: return
@@ -141,6 +144,7 @@ object BackToHome {
     }
 
     /** Let go: into the icon for [home], or back to the whole screen. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun settle(home: Boolean) {
         val app = app
         val b = app?.screenSpaceBounds
@@ -198,6 +202,7 @@ object BackToHome {
     }
 
     /** The window at [r] on screen: scaled evenly by width, cropped to the rect's height around its middle, rounded. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun place(
         tx: SurfaceControl.Transaction,
         target: RemoteAnimationTarget,
@@ -220,6 +225,7 @@ object BackToHome {
     }
 
     /** Home behind, coming forward from the style's receded, dimmed state as [p] goes to 1. */
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun placeHome(
         tx: SurfaceControl.Transaction,
         target: RemoteAnimationTarget,
