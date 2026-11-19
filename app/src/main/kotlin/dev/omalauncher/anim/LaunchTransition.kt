@@ -176,6 +176,11 @@ internal class LaunchTransition(
     ) {
         val from = this.from ?: return
         val end = app.end
+        if (closing) {
+            closingFrame(tx, app, from, 1 - p)
+            homeFrame(tx, home, p)
+            return
+        }
         val rect =
             when (style.origin) {
                 LaunchStyle.Origin.Icon ->
@@ -204,6 +209,54 @@ internal class LaunchTransition(
                 else -> min(1f, max(p, 0f))
             },
         )
+        homeFrame(tx, home, p)
+    }
+
+    /**
+     * An app closing, as on iPhones: at [q] 0 it fills the screen; it first draws in to a card, smaller, rounder and a
+     * little low, as if pulled already, then flies into its icon and fades into it at the very end.
+     */
+    private fun closingFrame(
+        tx: SurfaceControl.Transaction,
+        app: Window,
+        icon: RectF,
+        q: Float,
+    ) {
+        val end = RectF(app.end)
+        val card = RectF(end).apply {
+            inset(width() * (1 - CARD) / 2, height() * (1 - CARD) / 2)
+            offset(0f, end.height() * 0.04f)
+        }
+        val cardCorner = cornerPx * 1.6f
+        val rect: RectF
+        val radius: Float
+        if (q < CARD_SHARE) {
+            val f = q / CARD_SHARE
+            val e = 1 - (1 - f) * (1 - f)
+            rect = lerpRect(end, card, e)
+            radius = lerp(0f, cardCorner, e)
+        } else {
+            val f = (q - CARD_SHARE) / (1 - CARD_SHARE)
+            rect = lerpRect(card, icon, f)
+            radius = lerp(cardCorner, icon.width() * ICON_CORNER, min(max(f, 0f), 1f))
+        }
+        val s = max(rect.width() / app.width, 0.01f)
+        val cropH = min(app.height.toFloat(), rect.height() / s)
+        val cropTop = (app.height - cropH) / 2
+        tx.setCrop(app.leash, Rect(0, cropTop.toInt(), app.width, (cropTop + cropH).toInt()))
+        tx.setScale(app.leash, s, s)
+        tx.setPosition(app.leash, app.baseX + rect.left - app.end.left, app.baseY + rect.top - app.end.top - cropTop * s)
+        cornerRadius(tx, app.leash, radius / s)
+        if (style.shadowDp > 0) shadowRadius(tx, app.leash, style.shadowDp * density / s)
+        tx.setAlpha(app.leash, if (q < 0.82f) 1f else max(0f, 1 - (q - 0.82f) / 0.18f))
+    }
+
+    /** Home behind the app at progress [p]: receded, dimmed and blurred as it nears 1. */
+    private fun homeFrame(
+        tx: SurfaceControl.Transaction,
+        home: List<Window>,
+        p: Float,
+    ) {
         val q = min(max(p, 0f), 1f)
         blur?.let { blurRadius(tx, it, (blurPx * q).toInt()) }
         val zoom = 1 - style.homeZoom * q
@@ -244,6 +297,16 @@ internal class LaunchTransition(
             val size = b.width() * 0.15f
             return RectF(b.exactCenterX() - size / 2, b.exactCenterY() - size / 2, b.exactCenterX() + size / 2, b.exactCenterY() + size / 2)
         }
+
+        /** A closing app's card: its size against the screen, and the share of the motion spent drawing in to it. */
+        private const val CARD = 0.80f
+        private const val CARD_SHARE = 0.22f
+
+        private fun lerpRect(
+            a: RectF,
+            b: RectF,
+            f: Float,
+        ) = RectF(lerp(a.left, b.left, f), lerp(a.top, b.top, f), lerp(a.right, b.right, f), lerp(a.bottom, b.bottom, f))
 
         /** An icon's corner radius as a share of its width, about a squircle's. */
         private const val ICON_CORNER = 0.24f
