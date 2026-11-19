@@ -162,6 +162,13 @@ class Style(
         val ANIMATION_CORNERS = Setting.Number("animations.corners", 28.0, 0.0..60.0, "The opening app's corner radius in dp as it reaches full size.")
         val ANIMATION_BLUR = Setting.Number("animations.blur", 1.0, 0.0..2.0, "How strongly home blurs behind an opening app and as it comes back: 1 as the style has it, 0 not at all, 2 twice as much.")
         val ANIMATION_BACK_PREVIEW = Setting.Flag("animations.back-preview", true, "The app's window shrinks under the finger during the back gesture in every app, not only those that hand back to Android; it springs back if the app stays open. Needs Omalauncher+'s Vector module in System UI.")
+        val ANIMATION_BACK_STYLE =
+            Setting.Text(
+                "animations.back-style",
+                "card",
+                "How the window moves under the finger during back: card shrinks it and follows the finger down, slide moves it away from the edge, subtle barely moves it, follow keeps it under the finger.",
+            )
+        val ANIMATION_BACK_STRENGTH = Setting.Number("animations.back-strength", 1.0, 0.3..2.0, "How much the window moves under the finger during back: 1 as back-style has it, 2 twice as much.")
 
         /** Omalauncher+: see SystemWallpaperSync. */
         val WALLPAPER_SYNC =
@@ -293,7 +300,7 @@ object StyleFile {
     val ALL: List<Setting<*>> =
         with(Style) {
             listOf(THEME, BACKGROUND, FONT, APP_TILES, RECENT_APPS, EMPTY_PAGE_LEFT, EMPTY_PAGE_RIGHT, HOME_PAGE, COLUMNS, FORCE_SINGLE_PAGE, COVER_SCREEN, UNFOLDED_LAYOUT, UNFOLDED_COLUMNS, GAPS_IN, GAPS_OUT, TILE_OPACITY, TILE_FROST, TILE_BORDER_WIDTH, TILE_BORDER, TILE_BORDER_FOCUSED) +
-                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC, ANIMATION_STYLE, ANIMATION_SPEED, ANIMATION_CORNERS, ANIMATION_BLUR, ANIMATION_BACK_PREVIEW) +
+                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC, ANIMATION_STYLE, ANIMATION_SPEED, ANIMATION_CORNERS, ANIMATION_BLUR, ANIMATION_BACK_PREVIEW, ANIMATION_BACK_STYLE, ANIMATION_BACK_STRENGTH) +
                 listOf(STATUS_BAR_SHOWN) + STATUS_BAR.all + NAVIGATION_BAR.all + listOf(TERMINAL_FONT, TERMINAL_TEXT, TERMINAL_SUGGESTIONS, SWIPE_UP, SWIPE_DOWN)
         }
 

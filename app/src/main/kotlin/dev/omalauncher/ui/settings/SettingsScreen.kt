@@ -76,6 +76,7 @@ fun SettingsScreen(
     onLicenses: () -> Unit,
     onGestures: () -> Unit,
     onPermissions: () -> Unit,
+    onAnimations: () -> Unit,
 ) {
     val context = LocalContext.current
     val linux by runtime.bootstrap.state.collectAsState()
@@ -123,6 +124,8 @@ fun SettingsScreen(
             listOfNotNull(
                 if (canMove) SettingsRow(R.string.plus_move_title, stringResource(R.string.plus_move_subtitle)) { moving = true } else null,
                 SettingsRow(R.string.settings_style, runtime.themes.current?.title ?: stringResource(R.string.settings_style_subtitle), onStyle),
+                // Omalauncher+: its own page for motion (AnimationsScreen).
+                SettingsRow(R.string.anim_title, stringResource(R.string.anim_settings_subtitle), onAnimations),
                 SettingsRow(R.string.settings_pages, pluralStringResource(R.plurals.settings_pages_subtitle, runtime.widgets.pages.size, runtime.widgets.pages.size), onPages),
                 SettingsRow(
                     R.string.settings_gestures,

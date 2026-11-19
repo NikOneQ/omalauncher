@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anim_title">animations</string>
+    <string name="anim_settings_subtitle">ouverture, fermeture, le geste retour</string>
+    <string name="anim_status_full">✓ animations complètes : le launcher anime lui-même l\'ouverture et la fermeture des apps</string>
+    <string name="anim_status_simple">animations simples seulement : active Omalauncher+ system bridge dans Vector pour les complètes</string>
+    <string name="anim_open_title">ouvrir et fermer les apps</string>
+    <string name="anim_open_hint">comment une app sort de son icône et y retourne</string>
+    <string name="anim_ios_hint">ressort doux avec rebond, l\'accueil recule, s\'assombrit et devient flou</string>
+    <string name="anim_coloros_hint">rapide et ferme, l\'accueil s\'assombrit et devient un peu flou</string>
+    <string name="anim_pixel_hint">rebondissant, l\'app apparaît sur l\'icône, le fond devient flou</string>
+    <string name="anim_oneui_hint">depuis l\'icône sans rebond, comme celle de Samsung</string>
+    <string name="anim_fade_hint">l\'app apparaît sur l\'accueil en grandissant un peu</string>
+    <string name="anim_slide_hint">l\'app glisse depuis le bas</string>
+    <string name="anim_system_style_hint">l\'animation d\'Android</string>
+    <string name="anim_none_hint">les apps s\'ouvrent et se ferment aussitôt</string>
+    <string name="anim_back_title">geste retour</string>
+    <string name="anim_back_hint">la fenêtre de l\'app sous ton doigt pendant le geste retour, dans toutes les apps</string>
+    <string name="anim_back_card">carte</string>
+    <string name="anim_back_card_hint">se réduit en carte et suit le doigt vers le bas</string>
+    <string name="anim_back_slide">glisser</string>
+    <string name="anim_back_slide_hint">s\'écarte du bord en se réduisant à peine</string>
+    <string name="anim_back_subtle">discret</string>
+    <string name="anim_back_subtle_hint">à peine visible, la fenêtre bouge peu</string>
+    <string name="anim_back_follow">suivre</string>
+    <string name="anim_back_follow_hint">reste juste sous le doigt</string>
+    <string name="anim_back_strength">intensité</string>
+    <string name="anim_system_title">système</string>
+    <string name="anim_system_hint">après avoir changé un module Vector ou si quelque chose bloque ; root requis</string>
+    <string name="anim_restart_systemui">redémarrer System UI</string>
+    <string name="anim_restart_systemui_message">La barre d\'état, les gestes et les notifications disparaissent quelques secondes puis reviennent.</string>
+    <string name="anim_restart_launcher">redémarrer le launcher</string>
+    <string name="anim_restart_launcher_message">Le launcher et tout ce qui tourne dans son Linux s\'arrêtent, puis le launcher se rouvre.</string>
+    <string name="anim_soft_reboot">redémarrage doux</string>
+    <string name="anim_soft_reboot_message">Toutes les apps redémarrent comme après avoir éteint et rallumé, mais plus vite, et le noyau et root restent.</string>
+    <string name="anim_restart_confirm">redémarrer</string>
+    <string name="anim_restart_failed">Échec : root est nécessaire. Autorise Omalauncher+ dans ton gestionnaire root.</string>
+</resources>

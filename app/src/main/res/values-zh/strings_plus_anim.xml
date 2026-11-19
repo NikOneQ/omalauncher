@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anim_title">动画</string>
+    <string name="anim_settings_subtitle">打开、关闭、返回手势</string>
+    <string name="anim_status_full">✓ 完整动画：应用的打开和关闭由启动器自己绘制</string>
+    <string name="anim_status_simple">仅简单动画：在 Vector 中启用 Omalauncher+ system bridge 以获得完整动画</string>
+    <string name="anim_open_title">打开和关闭应用</string>
+    <string name="anim_open_hint">应用如何从图标展开并飞回图标</string>
+    <string name="anim_ios_hint">带回弹的柔和弹簧，主屏幕后退、变暗并模糊</string>
+    <string name="anim_coloros_hint">快速而干脆，主屏幕略微变暗并模糊</string>
+    <string name="anim_pixel_hint">弹性动作，应用在图标上浮现，背景模糊</string>
+    <string name="anim_oneui_hint">从图标展开不回弹，像三星原生一样</string>
+    <string name="anim_fade_hint">应用在主屏幕上浮现并略微放大</string>
+    <string name="anim_slide_hint">应用从底部滑入</string>
+    <string name="anim_system_style_hint">Android 自带动画</string>
+    <string name="anim_none_hint">应用立即打开和关闭</string>
+    <string name="anim_back_title">返回手势</string>
+    <string name="anim_back_hint">在所有应用中，返回滑动时应用窗口跟随手指</string>
+    <string name="anim_back_card">卡片</string>
+    <string name="anim_back_card_hint">缩成卡片并随手指向下移动</string>
+    <string name="anim_back_slide">平移</string>
+    <string name="anim_back_slide_hint">离开边缘，几乎不缩小</string>
+    <string name="anim_back_subtle">轻微</string>
+    <string name="anim_back_subtle_hint">几乎察觉不到，窗口很少移动</string>
+    <string name="anim_back_follow">跟随</string>
+    <string name="anim_back_follow_hint">紧贴在手指下方</string>
+    <string name="anim_back_strength">强度</string>
+    <string name="anim_system_title">系统</string>
+    <string name="anim_system_hint">修改 Vector 模块后或出现卡顿时使用；需要 root</string>
+    <string name="anim_restart_systemui">重启 System UI</string>
+    <string name="anim_restart_systemui_message">状态栏、手势和通知会消失几秒后恢复。</string>
+    <string name="anim_restart_launcher">重启启动器</string>
+    <string name="anim_restart_launcher_message">启动器及其 Linux 中运行的一切会停止，然后启动器重新打开。</string>
+    <string name="anim_soft_reboot">软重启</string>
+    <string name="anim_soft_reboot_message">所有应用会像关机再开机一样重启，但更快，内核和 root 保持不变。</string>
+    <string name="anim_restart_confirm">重启</string>
+    <string name="anim_restart_failed">失败：需要 root。请在 root 管理器中允许 Omalauncher+。</string>
+</resources>

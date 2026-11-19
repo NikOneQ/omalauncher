@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anim_title">アニメーション</string>
+    <string name="anim_settings_subtitle">開く、閉じる、戻るジェスチャー</string>
+    <string name="anim_status_full">✓ フルアニメーション：アプリの開閉をランチャー自身が描きます</string>
+    <string name="anim_status_simple">シンプルなアニメーションのみ：フルにするには Vector で Omalauncher+ system bridge を有効に</string>
+    <string name="anim_open_title">アプリを開く・閉じる</string>
+    <string name="anim_open_hint">アプリがアイコンから広がり、アイコンへ戻る動き</string>
+    <string name="anim_ios_hint">弾むやわらかいばね、ホームが奥へ下がり暗くぼける</string>
+    <string name="anim_coloros_hint">すばやくしっかり、ホームが少し暗くぼける</string>
+    <string name="anim_pixel_hint">弾む動き、アイコンの上にアプリが現れ、背景がぼける</string>
+    <string name="anim_oneui_hint">弾まずにアイコンから、Samsung 純正のように</string>
+    <string name="anim_fade_hint">アプリが少し大きくなりながらホームの上に現れる</string>
+    <string name="anim_slide_hint">アプリが下から上がってくる</string>
+    <string name="anim_system_style_hint">Android 標準のアニメーション</string>
+    <string name="anim_none_hint">アプリはすぐに開閉</string>
+    <string name="anim_back_title">戻るジェスチャー</string>
+    <string name="anim_back_hint">戻るをスワイプする間、すべてのアプリで指の下にアプリの窓</string>
+    <string name="anim_back_card">カード</string>
+    <string name="anim_back_card_hint">カードに縮んで指について下がる</string>
+    <string name="anim_back_slide">スライド</string>
+    <string name="anim_back_slide_hint">ほとんど縮まずに端から離れる</string>
+    <string name="anim_back_subtle">控えめ</string>
+    <string name="anim_back_subtle_hint">ほとんど動かない軽い動き</string>
+    <string name="anim_back_follow">追従</string>
+    <string name="anim_back_follow_hint">指のすぐ下にとどまる</string>
+    <string name="anim_back_strength">強さ</string>
+    <string name="anim_system_title">システム</string>
+    <string name="anim_system_hint">Vector モジュールを変えたあとや何かが止まったときに。root が必要</string>
+    <string name="anim_restart_systemui">System UI を再起動</string>
+    <string name="anim_restart_systemui_message">ステータスバー、ジェスチャー、通知が数秒消えてから戻ります。</string>
+    <string name="anim_restart_launcher">ランチャーを再起動</string>
+    <string name="anim_restart_launcher_message">ランチャーとその Linux で動いているものが止まり、ランチャーが再び開きます。</string>
+    <string name="anim_soft_reboot">ソフトリブート</string>
+    <string name="anim_soft_reboot_message">電源を入れ直したようにすべてのアプリが再起動しますが、より速く、カーネルと root はそのままです。</string>
+    <string name="anim_restart_confirm">再起動</string>
+    <string name="anim_restart_failed">失敗しました：root が必要です。root マネージャーで Omalauncher+ を許可してください。</string>
+</resources>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anim_title">анімації</string>
+    <string name="anim_settings_subtitle">відкриття, закриття, жест «назад»</string>
+    <string name="anim_status_full">✓ повні анімації: відкриття й закриття застосунків малює сам лаунчер</string>
+    <string name="anim_status_simple">лише прості анімації: для повних увімкніть у Vector модуль Omalauncher+ system bridge</string>
+    <string name="anim_open_title">відкриття й закриття застосунків</string>
+    <string name="anim_open_hint">як застосунок виростає з іконки й летить назад у неї</string>
+    <string name="anim_ios_hint">м\'яка пружина з відскоком, головний екран від\'їжджає, темнішає й розмивається</string>
+    <string name="anim_coloros_hint">швидко й чітко, головний екран трохи темнішає й розмивається</string>
+    <string name="anim_pixel_hint">пружно, застосунок проявляється поверх іконки, фон розмивається</string>
+    <string name="anim_oneui_hint">з іконки без відскоку, як у самого Samsung</string>
+    <string name="anim_fade_hint">застосунок проявляється поверх головного екрана, трохи збільшуючись</string>
+    <string name="anim_slide_hint">застосунок виїжджає знизу</string>
+    <string name="anim_system_style_hint">стандартна анімація Android</string>
+    <string name="anim_none_hint">застосунки відкриваються й закриваються миттєво</string>
+    <string name="anim_back_title">жест «назад»</string>
+    <string name="anim_back_hint">вікно застосунку під пальцем, поки ви ведете «назад», в усіх застосунках</string>
+    <string name="anim_back_card">картка</string>
+    <string name="anim_back_card_hint">стискається в картку й іде за пальцем униз</string>
+    <string name="anim_back_slide">зсув</string>
+    <string name="anim_back_slide_hint">від\'їжджає від краю, майже не зменшуючись</string>
+    <string name="anim_back_subtle">легкий</string>
+    <string name="anim_back_subtle_hint">ледь помітно, вікно майже не рухається</string>
+    <string name="anim_back_follow">за пальцем</string>
+    <string name="anim_back_follow_hint">тримається просто під пальцем</string>
+    <string name="anim_back_strength">сила</string>
+    <string name="anim_system_title">система</string>
+    <string name="anim_system_hint">після зміни модуля Vector або якщо щось зависло; потрібен root</string>
+    <string name="anim_restart_systemui">перезапустити System UI</string>
+    <string name="anim_restart_systemui_message">Рядок стану, жести й сповіщення зникнуть на кілька секунд і повернуться.</string>
+    <string name="anim_restart_launcher">перезапустити лаунчер</string>
+    <string name="anim_restart_launcher_message">Лаунчер і все, що працює в його Linux, зупиниться, і лаунчер відкриється знову.</string>
+    <string name="anim_soft_reboot">м\'яке перезавантаження</string>
+    <string name="anim_soft_reboot_message">Усі застосунки перезапустяться, як після вимкнення й увімкнення, але швидше, а ядро й root залишаться.</string>
+    <string name="anim_restart_confirm">перезапустити</string>
+    <string name="anim_restart_failed">Не вдалося: потрібен root. Дозвольте Omalauncher+ у менеджері root.</string>
+</resources>

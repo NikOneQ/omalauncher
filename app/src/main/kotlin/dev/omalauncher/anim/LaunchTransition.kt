@@ -282,7 +282,8 @@ internal class LaunchTransition(
         w: Window,
     ) {
         shadowRadius(tx, w.leash, 0f)
-        tx.setCrop(w.leash, Rect(0, 0, w.width, w.height))
+        // No crop at all rather than one the size it is now: the window may change size later (unfolding).
+        tx.setCrop(w.leash, null)
         tx.setScale(w.leash, 1f, 1f)
         tx.setPosition(w.leash, w.baseX, w.baseY)
         tx.setAlpha(w.leash, 1f)

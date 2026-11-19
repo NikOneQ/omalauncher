@@ -41,7 +41,15 @@ class BackToHomeProvider : ContentProvider() {
                     putBinder("runner", BackToHome.runner.asBinder())
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) putBinder("close", CloseToHome.transition.asBinder())
                 }
-            CONFIG -> Bundle().apply { putBoolean("preview", preview) }
+            CONFIG ->
+                Bundle().apply {
+                    putBoolean("preview", preview)
+                    putString("backStyle", LauncherStyle.style[Style.ANIMATION_BACK_STYLE])
+                    putFloat("backStrength", LauncherStyle.style[Style.ANIMATION_BACK_STRENGTH].toFloat())
+                    putFloat("corners", LauncherStyle.style[Style.ANIMATION_CORNERS].toFloat())
+                }
+            // Home's background, small and blurred, for around a shrinking app (Backdrop).
+            BACKDROP -> context?.let { ctx -> Backdrop.bitmap(ctx) }?.let { Bundle().apply { putParcelable("bitmap", it) } }
             HANDOFF -> {
                 val e = extras ?: return null
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -90,6 +98,7 @@ class BackToHomeProvider : ContentProvider() {
         const val METHOD = "backToHome"
         const val HANDOFF = "handoff"
         const val CONFIG = "config"
+        const val BACKDROP = "backdrop"
         const val SYSTEM_UI = "com.android.systemui"
 
         /** Sent to SystemUI as the launcher starts, so the module asks again (the binders die with the process). */

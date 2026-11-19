@@ -79,7 +79,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.omalauncher.apps.IconPack
 import dev.omalauncher.R
-import dev.omalauncher.anim.LaunchAnimations
 import dev.omalauncher.Runtime
 import dev.omalauncher.linux.LauncherFont
 import dev.omalauncher.linux.LinuxState
@@ -192,19 +191,6 @@ fun StyleScreen(
             NumberSlider(R.string.style_opacity, style, Style.TILE_OPACITY)
             Flag(R.string.style_frosted_glass, R.string.style_on, R.string.style_off, style, Style.TILE_FROST)
             WidgetPreview()
-            // Omalauncher+: how apps open from home; see LaunchAnimations.
-            Heading(R.string.style_animations)
-            StyleOption(
-                R.string.style_animation,
-                ANIMATIONS.map { stringResource(it.second) },
-                ANIMATIONS.indexOfFirst { it.first == style.style[Style.ANIMATION_STYLE] },
-            ) { i -> style.update { it.with(Style.ANIMATION_STYLE, ANIMATIONS[i].first) } }
-            NumberSlider(R.string.style_animation_speed, style, Style.ANIMATION_SPEED)
-            Stepper(R.string.style_animation_corners, style, Style.ANIMATION_CORNERS)
-            NumberSlider(R.string.style_animation_blur, style, Style.ANIMATION_BLUR)
-            Flag(R.string.style_animation_back_preview, R.string.style_on, R.string.style_off, style, Style.ANIMATION_BACK_PREVIEW)
-            val animationContext = LocalContext.current
-            if (!remember { LaunchAnimations.privileged(animationContext) }) OptionHint(stringResource(R.string.style_animation_module))
             Heading(R.string.style_screens)
             Stepper(R.string.style_gaps_out, style, Style.SCREEN_GAPS_OUT)
             Stepper(R.string.style_border_width, style, Style.SCREEN_BORDER_WIDTH)
@@ -274,19 +260,6 @@ private class BarTexts(
     @StringRes val restoreTitle: Int,
     @StringRes val restoreMessage: Int,
 )
-
-/** Omalauncher+: animations.style's values, by their names on screen. */
-private val ANIMATIONS =
-    listOf(
-        "ios" to R.string.style_animation_ios,
-        "coloros" to R.string.style_animation_coloros,
-        "pixel" to R.string.style_animation_pixel,
-        "oneui" to R.string.style_animation_oneui,
-        "fade" to R.string.style_animation_fade,
-        "slide" to R.string.style_animation_slide,
-        "system" to R.string.style_animation_system,
-        "none" to R.string.style_animation_none,
-    )
 
 private val KEYBAR_TEXTS =
     BarTexts(
@@ -745,7 +718,7 @@ private fun previewText(columns: Int) =
 
 /** A section's title, set apart from the muted labels of the options under it by the accent color, as the weather screen sets its sections apart; [actions] go at the far end. */
 @Composable
-private fun Heading(
+internal fun Heading(
     @StringRes text: Int,
     actions: @Composable RowScope.() -> Unit = {},
 ) {
@@ -819,14 +792,14 @@ private val LabelWidth = 104.dp
 
 /** An option's name; a long one wraps rather than push its control out of line with the others. */
 @Composable
-private fun OptionLabel(
+internal fun OptionLabel(
     text: String,
     modifier: Modifier = Modifier,
 ) = BasicText(text, modifier.width(LabelWidth).padding(end = 8.dp), style = Mono.copy(color = Palette.muted))
 
 /** A note under an option, lined up with its control. */
 @Composable
-private fun OptionHint(
+internal fun OptionHint(
     text: String,
     modifier: Modifier = Modifier,
 ) = BasicText(text, modifier.padding(start = LabelWidth), style = Mono.copy(color = Palette.muted, fontSize = TextSize.Small))
@@ -836,7 +809,7 @@ private fun OptionHint(
  * in style.toml between steps snaps to the next one. Reset shows once one is off its default.
  */
 @Composable
-private fun Stepper(
+internal fun Stepper(
     @StringRes label: Int,
     style: StyleStore,
     vararg settings: Setting.Number,
@@ -885,7 +858,7 @@ private fun Stepper(
  * (style.toml is saved once it settles).
  */
 @Composable
-private fun NumberSlider(
+internal fun NumberSlider(
     @StringRes label: Int,
     style: StyleStore,
     setting: Setting.Number,
@@ -941,7 +914,7 @@ private fun NumberSlider(
 
 /** [Style] flags as a choice of two, [on] first, set together. */
 @Composable
-private fun Flag(
+internal fun Flag(
     @StringRes label: Int,
     @StringRes on: Int,
     @StringRes off: Int,
@@ -988,7 +961,7 @@ private fun CountOption(
  * None is picked for a value set in style.toml outside the options; [custom] says what it is.
  */
 @Composable
-private fun StyleOption(
+internal fun StyleOption(
     @StringRes label: Int,
     options: List<String>,
     selected: Int,

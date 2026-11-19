@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anim_title">animasi</string>
+    <string name="anim_settings_subtitle">membuka, menutup, gestur kembali</string>
+    <string name="anim_status_full">✓ animasi penuh: launcher sendiri yang memainkan aplikasi terbuka dan tertutup</string>
+    <string name="anim_status_simple">hanya animasi sederhana: aktifkan Omalauncher+ system bridge di Vector untuk yang penuh</string>
+    <string name="anim_open_title">membuka dan menutup aplikasi</string>
+    <string name="anim_open_hint">bagaimana aplikasi tumbuh dari ikonnya dan kembali ke sana</string>
+    <string name="anim_ios_hint">pegas lembut dengan pantulan, beranda mundur, meredup dan buram</string>
+    <string name="anim_coloros_hint">cepat dan tegas, beranda sedikit meredup dan buram</string>
+    <string name="anim_pixel_hint">memantul, aplikasi muncul di atas ikon, latar buram</string>
+    <string name="anim_oneui_hint">dari ikon tanpa pantulan, seperti milik Samsung</string>
+    <string name="anim_fade_hint">aplikasi muncul di atas beranda sambil sedikit membesar</string>
+    <string name="anim_slide_hint">aplikasi naik dari bawah</string>
+    <string name="anim_system_style_hint">animasi bawaan Android</string>
+    <string name="anim_none_hint">aplikasi terbuka dan tertutup seketika</string>
+    <string name="anim_back_title">gestur kembali</string>
+    <string name="anim_back_hint">jendela aplikasi di bawah jari selama menggeser kembali, di semua aplikasi</string>
+    <string name="anim_back_card">kartu</string>
+    <string name="anim_back_card_hint">mengecil menjadi kartu dan mengikuti jari ke bawah</string>
+    <string name="anim_back_slide">geser</string>
+    <string name="anim_back_slide_hint">menjauh dari tepi, hampir tidak mengecil</string>
+    <string name="anim_back_subtle">halus</string>
+    <string name="anim_back_subtle_hint">nyaris tak terasa, jendela hampir tidak bergerak</string>
+    <string name="anim_back_follow">ikuti</string>
+    <string name="anim_back_follow_hint">tetap tepat di bawah jari</string>
+    <string name="anim_back_strength">kekuatan</string>
+    <string name="anim_system_title">sistem</string>
+    <string name="anim_system_hint">setelah mengubah modul Vector atau saat ada yang macet; perlu root</string>
+    <string name="anim_restart_systemui">mulai ulang System UI</string>
+    <string name="anim_restart_systemui_message">Bilah status, gestur, dan notifikasi hilang beberapa detik lalu kembali.</string>
+    <string name="anim_restart_launcher">mulai ulang launcher</string>
+    <string name="anim_restart_launcher_message">Launcher dan semua yang berjalan di Linux-nya berhenti, lalu launcher terbuka lagi.</string>
+    <string name="anim_soft_reboot">mulai ulang lunak</string>
+    <string name="anim_soft_reboot_message">Semua aplikasi dimulai ulang seperti setelah dimatikan dan dinyalakan, tapi lebih cepat, dan kernel serta root tetap.</string>
+    <string name="anim_restart_confirm">mulai ulang</string>
+    <string name="anim_restart_failed">Gagal: perlu root. Izinkan Omalauncher+ di pengelola root.</string>
+</resources>

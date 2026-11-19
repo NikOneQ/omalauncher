@@ -52,6 +52,9 @@ enum class SettingsPage {
     Licenses,
     Gestures,
 
+    /** Omalauncher+: how apps open and close, the back gesture, and the restarts. */
+    Animations,
+
     /** Every permission, to turn on or off. */
     Permissions,
 }
@@ -128,6 +131,7 @@ private fun SettingsPage(
                 onLicenses = { stack.push(SettingsPage.Licenses) },
                 onGestures = { stack.push(SettingsPage.Gestures) },
                 onPermissions = { stack.push(SettingsPage.Permissions) },
+                onAnimations = { stack.push(SettingsPage.Animations) },
             )
         SettingsPage.Style -> StyleScreen(runtime, onDismiss = close, onBrowse = { stack.push(SettingsPage.Themes) }, onAgent = ::agent)
         SettingsPage.Pages -> {
@@ -177,5 +181,6 @@ private fun SettingsPage(
         SettingsPage.Licenses -> LicensesScreen(onDismiss = close)
         SettingsPage.Gestures -> GesturesScreen(runtime, onDismiss = close, onAgent = ::agent)
         SettingsPage.Permissions -> PermissionsScreen(runtime, onDismiss = close)
+        SettingsPage.Animations -> AnimationsScreen(runtime, onDismiss = close)
     }
 }

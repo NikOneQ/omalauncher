@@ -68,7 +68,9 @@ object CloseToHome {
                 val held = handoff?.takeIf { it.fresh }
                 handoff = null
                 Log.i(TAG, "app closing to home, as $key, from ${if (held != null) "the back preview" else "the full screen"}")
-                LaunchTransition(null, style, speed, corner, ctx.packageName, density, blur, closing = true, handoffRect = held?.rect, handoffCorner = held?.cornerPx ?: 0f)
+                // From under the finger the window is already on its way: the rest goes quicker.
+                val pace = if (held != null) speed * 1.35f else speed
+                LaunchTransition(null, style, pace, corner, ctx.packageName, density, blur, closing = true, handoffRect = held?.rect, handoffCorner = held?.cornerPx ?: 0f)
                     .startAnimation(token, info, t, finishCallback)
             }
 

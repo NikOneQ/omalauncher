@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="anim_title">animaciones</string>
+    <string name="anim_settings_subtitle">abrir, cerrar, el gesto atrás</string>
+    <string name="anim_status_full">✓ animaciones completas: el launcher anima él mismo cómo se abren y cierran las apps</string>
+    <string name="anim_status_simple">solo animaciones simples: activa Omalauncher+ system bridge en Vector para las completas</string>
+    <string name="anim_open_title">abrir y cerrar apps</string>
+    <string name="anim_open_hint">cómo una app crece desde su icono y vuelve a él</string>
+    <string name="anim_ios_hint">muelle suave con rebote, el inicio se aleja, oscurece y desenfoca</string>
+    <string name="anim_coloros_hint">rápido y firme, el inicio se oscurece y desenfoca un poco</string>
+    <string name="anim_pixel_hint">con rebote, la app aparece sobre el icono, el fondo se desenfoca</string>
+    <string name="anim_oneui_hint">desde el icono sin rebote, como el de Samsung</string>
+    <string name="anim_fade_hint">la app aparece sobre el inicio creciendo un poco</string>
+    <string name="anim_slide_hint">la app sube desde abajo</string>
+    <string name="anim_system_style_hint">la animación de Android</string>
+    <string name="anim_none_hint">las apps se abren y cierran al instante</string>
+    <string name="anim_back_title">gesto atrás</string>
+    <string name="anim_back_hint">la ventana de la app bajo tu dedo mientras deslizas atrás, en todas las apps</string>
+    <string name="anim_back_card">tarjeta</string>
+    <string name="anim_back_card_hint">se encoge en una tarjeta y sigue al dedo hacia abajo</string>
+    <string name="anim_back_slide">desplazar</string>
+    <string name="anim_back_slide_hint">se aparta del borde casi sin encogerse</string>
+    <string name="anim_back_subtle">sutil</string>
+    <string name="anim_back_subtle_hint">apenas se nota, la ventana casi no se mueve</string>
+    <string name="anim_back_follow">seguir</string>
+    <string name="anim_back_follow_hint">se queda justo bajo el dedo</string>
+    <string name="anim_back_strength">intensidad</string>
+    <string name="anim_system_title">sistema</string>
+    <string name="anim_system_hint">tras cambiar un módulo de Vector o si algo se atasca; necesita root</string>
+    <string name="anim_restart_systemui">reiniciar System UI</string>
+    <string name="anim_restart_systemui_message">La barra de estado, los gestos y las notificaciones desaparecen unos segundos y vuelven.</string>
+    <string name="anim_restart_launcher">reiniciar el launcher</string>
+    <string name="anim_restart_launcher_message">El launcher y todo lo que corre en su Linux se detienen y el launcher se abre de nuevo.</string>
+    <string name="anim_soft_reboot">reinicio suave</string>
+    <string name="anim_soft_reboot_message">Todas las apps se reinician como al apagar y encender, pero más rápido, y el kernel y root se mantienen.</string>
+    <string name="anim_restart_confirm">reiniciar</string>
+    <string name="anim_restart_failed">No funcionó: hace falta root. Permite Omalauncher+ en tu gestor de root.</string>
+</resources>

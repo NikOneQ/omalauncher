@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Omalauncher+: the animations page (AnimationsScreen). -->
+<resources>
+    <string name="anim_title">animations</string>
+    <string name="anim_settings_subtitle">opening, closing, the back gesture</string>
+    <string name="anim_status_full">✓ full animations: the launcher plays apps opening and closing itself</string>
+    <string name="anim_status_simple">simple animations only: turn on the Omalauncher+ system bridge in Vector for the full ones</string>
+    <string name="anim_open_title">opening and closing apps</string>
+    <string name="anim_open_hint">how an app grows out of its icon and flies back into it</string>
+    <string name="anim_ios_hint">soft spring with a bounce, home sinks back, darkens and blurs</string>
+    <string name="anim_coloros_hint">quick and firm, home dims and blurs a little</string>
+    <string name="anim_pixel_hint">bouncy spring, the app fades in over the icon, home blurs</string>
+    <string name="anim_oneui_hint">out of the icon without bounce, as Samsung\'s own</string>
+    <string name="anim_fade_hint">the app fades in over home, growing a little</string>
+    <string name="anim_slide_hint">the app slides up from the bottom</string>
+    <string name="anim_system_style_hint">Android\'s own animation</string>
+    <string name="anim_none_hint">apps open and close at once</string>
+    <string name="anim_back_title">back gesture</string>
+    <string name="anim_back_hint">the app\'s window under your finger while you swipe back, in every app</string>
+    <string name="anim_back_card">card</string>
+    <string name="anim_back_card_hint">shrinks into a card and follows the finger down</string>
+    <string name="anim_back_slide">slide</string>
+    <string name="anim_back_slide_hint">moves away from the edge, barely shrinking</string>
+    <string name="anim_back_subtle">subtle</string>
+    <string name="anim_back_subtle_hint">a light touch, the window hardly moves</string>
+    <string name="anim_back_follow">follow</string>
+    <string name="anim_back_follow_hint">stays right under the finger</string>
+    <string name="anim_back_strength">strength</string>
+    <string name="anim_system_title">system</string>
+    <string name="anim_system_hint">after changing a Vector module or when something gets stuck; needs root</string>
+    <string name="anim_restart_systemui">restart System UI</string>
+    <string name="anim_restart_systemui_message">The status bar, gestures and notifications go away for a few seconds and come back.</string>
+    <string name="anim_restart_launcher">restart the launcher</string>
+    <string name="anim_restart_launcher_message">The launcher and everything running in its Linux stop and the launcher opens again.</string>
+    <string name="anim_soft_reboot">soft reboot</string>
+    <string name="anim_soft_reboot_message">Every app restarts, as after turning the phone off and on, but quicker and the kernel and root stay.</string>
+    <string name="anim_restart_confirm">restart</string>
+    <string name="anim_restart_failed">Didn\'t work: root is needed. Allow Omalauncher+ in your root manager.</string>
+</resources>
