@@ -46,6 +46,8 @@ internal fun MoveFromOmalauncherDialog(onDismiss: () -> Unit) {
                 )
             waiting = false
             noRoot = !started
+            // Started: the move stops this app in a moment and says how it went in a notification.
+            if (started) onDismiss()
         }
     }
 }

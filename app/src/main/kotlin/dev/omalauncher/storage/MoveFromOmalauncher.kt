@@ -73,6 +73,8 @@ object MoveFromOmalauncher {
         |SRC=/data/data/${'$'}SRC_PKG
         |DST=/data/data/${'$'}DST_PKG
         |MOVING=${'$'}1 DONE=${'$'}2 FAILED=${'$'}3
+        |# An app's root shell sees only that app's data (app data isolation): run in init's mount namespace instead.
+        |if [ -z "${'$'}MOVE_GLOBAL_NS" ]; then export MOVE_GLOBAL_NS=1; exec nsenter -t 1 -m -- sh "${'$'}0" "${'$'}@"; fi
         |# Out of this app's process group first: force-stopping it kills everything in that group, root or not.
         |for g in /sys/fs/cgroup/cgroup.procs /acct/cgroup.procs /dev/cg2_bpf/cgroup.procs; do (echo ${'$'}${'$'} > "${'$'}g") 2>/dev/null; done
         |note() { cmd notification post -S bigtext -t 'Omalauncher+' omalauncher-move "${'$'}1" >/dev/null 2>&1; echo "${'$'}1"; }
