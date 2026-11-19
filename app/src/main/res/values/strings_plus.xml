@@ -12,4 +12,17 @@
     <string name="plus_move_notice_done">Moved: widgets, home, style, themes and Linux are here now.</string>
     <string name="plus_move_notice_failed">Moving from Omalauncher failed; both launchers\' data is as it was.</string>
     <string name="style_wallpaper_sync">same as android\'s wallpaper</string>
+    <string name="style_animations">animations</string>
+    <string name="style_animation">opening apps</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">fade</string>
+    <string name="style_animation_slide">slide</string>
+    <string name="style_animation_system">system</string>
+    <string name="style_animation_none">none</string>
+    <string name="style_animation_speed">speed</string>
+    <string name="style_animation_corners">corners</string>
+    <string name="style_animation_module">plays in full with the Omalauncher+ KernelSU module; without it, a simpler scale-up</string>
 </resources>

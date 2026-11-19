@@ -12,6 +12,11 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- Omalauncher+: Android's wallpaper follows the background (SystemWallpaperSync). -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
+    <!-- Omalauncher+: playing apps' openings itself (LaunchAnimations). Android grants it only to system apps, which
+         Omalauncher+'s KernelSU module makes it; without that the launcher falls back to Android's scale-up. -->
+    <uses-permission
+        android:name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS"
+        tools:ignore="ProtectedPermissions" />
     <!-- Speech input for the agent prompt bar; only recognized text reaches Linux. -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- Widgets' android.location, after a tap on location("request"): approximate only, and only while on screen. -->

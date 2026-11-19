@@ -11,4 +11,17 @@
     <string name="plus_move_notice_done">移行しました：ウィジェット、ホーム、スタイル、テーマ、Linux がこちらに来ました。</string>
     <string name="plus_move_notice_failed">Omalauncher からの移行に失敗しました。両方のランチャーのデータは元のままです。</string>
     <string name="style_wallpaper_sync">android の壁紙と同じにする</string>
+    <string name="style_animations">アニメーション</string>
+    <string name="style_animation">アプリを開く</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">フェード</string>
+    <string name="style_animation_slide">スライド</string>
+    <string name="style_animation_system">システム</string>
+    <string name="style_animation_none">なし</string>
+    <string name="style_animation_speed">速さ</string>
+    <string name="style_animation_corners">角の丸み</string>
+    <string name="style_animation_module">Omalauncher+ の KernelSU モジュールで完全に再生。なしでは単純な拡大</string>
 </resources>

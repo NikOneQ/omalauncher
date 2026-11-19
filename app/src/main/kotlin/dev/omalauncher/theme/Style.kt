@@ -151,6 +151,16 @@ class Style(
         val THEME = Setting.Name("theme", "The Omarchy theme, by its directory name in ~/.local/share/omarchy/themes or ~/.config/omarchy/themes (yours win).")
         val BACKGROUND = Setting.Name("background", "A file name from the theme's backgrounds/ or ~/.config/omarchy/backgrounds/<theme>/. Unset: the theme's first.")
 
+        /** Omalauncher+: see LaunchAnimations. */
+        val ANIMATION_STYLE =
+            Setting.Text(
+                "animations.style",
+                "ios",
+                "How apps open from home: ios, coloros, pixel or oneui grow out of the icon, fade and slide come in over home, system is Android's own and none opens them at once. Played in full with Omalauncher+'s KernelSU module; without it Android's scale-up stands in.",
+            )
+        val ANIMATION_SPEED = Setting.Number("animations.speed", 1.0, 0.25..3.0, "How fast apps open: 1 as the style has it, 2 twice as fast, 0.5 half as fast.")
+        val ANIMATION_CORNERS = Setting.Number("animations.corners", 28.0, 0.0..60.0, "The opening app's corner radius in dp as it reaches full size.")
+
         /** Omalauncher+: see SystemWallpaperSync. */
         val WALLPAPER_SYNC =
             Setting.Flag(
@@ -281,7 +291,7 @@ object StyleFile {
     val ALL: List<Setting<*>> =
         with(Style) {
             listOf(THEME, BACKGROUND, FONT, APP_TILES, RECENT_APPS, EMPTY_PAGE_LEFT, EMPTY_PAGE_RIGHT, HOME_PAGE, COLUMNS, FORCE_SINGLE_PAGE, COVER_SCREEN, UNFOLDED_LAYOUT, UNFOLDED_COLUMNS, GAPS_IN, GAPS_OUT, TILE_OPACITY, TILE_FROST, TILE_BORDER_WIDTH, TILE_BORDER, TILE_BORDER_FOCUSED) +
-                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC) +
+                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC, ANIMATION_STYLE, ANIMATION_SPEED, ANIMATION_CORNERS) +
                 listOf(STATUS_BAR_SHOWN) + STATUS_BAR.all + NAVIGATION_BAR.all + listOf(TERMINAL_FONT, TERMINAL_TEXT, TERMINAL_SUGGESTIONS, SWIPE_UP, SWIPE_DOWN)
         }
 

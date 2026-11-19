@@ -1,5 +1,6 @@
 package dev.omalauncher.apps
 
+import dev.omalauncher.anim.LaunchAnimations
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -344,15 +345,21 @@ class AndroidAppCatalog(
         // Uninstalled or disabled since the list was loaded.
         runCatching {
             if (user == Process.myUserHandle()) {
-                // As Launcher3 does for its own profile; only an intent can ask for no open-an-app animation.
+                // As Launcher3 does for its own profile. Omalauncher+: opened with animations.style's animation
+                // (LaunchAnimations), or none at all for "none", which only an intent can ask for.
+                val launch = LaunchAnimations.options(context)
                 context.startActivity(
                     Intent(Intent.ACTION_MAIN)
                         .addCategory(Intent.CATEGORY_LAUNCHER)
                         .setComponent(component)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or Intent.FLAG_ACTIVITY_NO_ANIMATION),
+                        .addFlags(
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                                (if (launch.noAnimation) Intent.FLAG_ACTIVITY_NO_ANIMATION else 0),
+                        ),
+                    launch.options,
                 )
             } else {
-                launcherApps.startMainActivity(component, user, null, null)
+                launcherApps.startMainActivity(component, user, null, LaunchAnimations.options(context).options)
             }
         }.onFailure { Log.w(TAG, "cannot open $component in $user", it) }
     }

@@ -11,4 +11,17 @@
     <string name="plus_move_notice_done">Selesai: widget, beranda, gaya, tema, dan Linux sekarang ada di sini.</string>
     <string name="plus_move_notice_failed">Gagal memindahkan dari Omalauncher; data kedua launcher tetap seperti semula.</string>
     <string name="style_wallpaper_sync">sama dengan wallpaper android</string>
+    <string name="style_animations">animasi</string>
+    <string name="style_animation">membuka aplikasi</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">muncul</string>
+    <string name="style_animation_slide">geser</string>
+    <string name="style_animation_system">sistem</string>
+    <string name="style_animation_none">tanpa</string>
+    <string name="style_animation_speed">kecepatan</string>
+    <string name="style_animation_corners">sudut</string>
+    <string name="style_animation_module">penuh dengan modul KernelSU Omalauncher+; tanpanya, pembesaran sederhana</string>
 </resources>

@@ -11,4 +11,17 @@
     <string name="plus_move_notice_done">Перенесено: виджеты, главный экран, стиль, темы и Linux теперь здесь.</string>
     <string name="plus_move_notice_failed">Перенос из Omalauncher не удался; данные обоих лаунчеров остались как были.</string>
     <string name="style_wallpaper_sync">те же обои в android</string>
+    <string name="style_animations">анимации</string>
+    <string name="style_animation">открытие приложений</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">появление</string>
+    <string name="style_animation_slide">выезд</string>
+    <string name="style_animation_system">системная</string>
+    <string name="style_animation_none">без анимации</string>
+    <string name="style_animation_speed">скорость</string>
+    <string name="style_animation_corners">скругление</string>
+    <string name="style_animation_module">полностью работает с модулем Omalauncher+ для KernelSU; без него — простое увеличение</string>
 </resources>

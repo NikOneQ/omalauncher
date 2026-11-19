@@ -79,6 +79,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.omalauncher.apps.IconPack
 import dev.omalauncher.R
+import dev.omalauncher.anim.LaunchAnimations
 import dev.omalauncher.Runtime
 import dev.omalauncher.linux.LauncherFont
 import dev.omalauncher.linux.LinuxState
@@ -191,6 +192,17 @@ fun StyleScreen(
             NumberSlider(R.string.style_opacity, style, Style.TILE_OPACITY)
             Flag(R.string.style_frosted_glass, R.string.style_on, R.string.style_off, style, Style.TILE_FROST)
             WidgetPreview()
+            // Omalauncher+: how apps open from home; see LaunchAnimations.
+            Heading(R.string.style_animations)
+            StyleOption(
+                R.string.style_animation,
+                ANIMATIONS.map { stringResource(it.second) },
+                ANIMATIONS.indexOfFirst { it.first == style.style[Style.ANIMATION_STYLE] },
+            ) { i -> style.update { it.with(Style.ANIMATION_STYLE, ANIMATIONS[i].first) } }
+            NumberSlider(R.string.style_animation_speed, style, Style.ANIMATION_SPEED)
+            Stepper(R.string.style_animation_corners, style, Style.ANIMATION_CORNERS)
+            val animationContext = LocalContext.current
+            if (!remember { LaunchAnimations.privileged(animationContext) }) OptionHint(stringResource(R.string.style_animation_module))
             Heading(R.string.style_screens)
             Stepper(R.string.style_gaps_out, style, Style.SCREEN_GAPS_OUT)
             Stepper(R.string.style_border_width, style, Style.SCREEN_BORDER_WIDTH)
@@ -260,6 +272,19 @@ private class BarTexts(
     @StringRes val restoreTitle: Int,
     @StringRes val restoreMessage: Int,
 )
+
+/** Omalauncher+: animations.style's values, by their names on screen. */
+private val ANIMATIONS =
+    listOf(
+        "ios" to R.string.style_animation_ios,
+        "coloros" to R.string.style_animation_coloros,
+        "pixel" to R.string.style_animation_pixel,
+        "oneui" to R.string.style_animation_oneui,
+        "fade" to R.string.style_animation_fade,
+        "slide" to R.string.style_animation_slide,
+        "system" to R.string.style_animation_system,
+        "none" to R.string.style_animation_none,
+    )
 
 private val KEYBAR_TEXTS =
     BarTexts(

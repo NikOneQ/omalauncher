@@ -11,4 +11,17 @@
     <string name="plus_move_notice_done">Pronto: widgets, início, estilo, temas e Linux estão aqui agora.</string>
     <string name="plus_move_notice_failed">Não foi possível trazer do Omalauncher; os dados dos dois launchers continuam como estavam.</string>
     <string name="style_wallpaper_sync">igual ao papel de parede do android</string>
+    <string name="style_animations">animações</string>
+    <string name="style_animation">abrir apps</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">surgir</string>
+    <string name="style_animation_slide">deslizar</string>
+    <string name="style_animation_system">sistema</string>
+    <string name="style_animation_none">nenhuma</string>
+    <string name="style_animation_speed">velocidade</string>
+    <string name="style_animation_corners">cantos</string>
+    <string name="style_animation_module">completa com o módulo KernelSU do Omalauncher+; sem ele, um aumento simples</string>
 </resources>

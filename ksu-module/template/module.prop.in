@@ -1,0 +1,6 @@
+id=omalauncher_plus_system
+name=Omalauncher+ as a system app
+version=v@VERSION@
+versionCode=@CODE@
+author=NikOneQ
+description=Makes Omalauncher+ a privileged system app so it may play apps' openings itself (animations in its style settings). Only CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS is granted. Remove the module and soft-reboot to undo; the launcher and its data stay.

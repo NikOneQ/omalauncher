@@ -11,4 +11,17 @@
     <string name="plus_move_notice_done">已迁移：小部件、主屏幕、样式、主题和 Linux 现在都在这里。</string>
     <string name="plus_move_notice_failed">从 Omalauncher 迁移失败；两个启动器的数据保持不变。</string>
     <string name="style_wallpaper_sync">与 android 壁纸相同</string>
+    <string name="style_animations">动画</string>
+    <string name="style_animation">打开应用</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">淡入</string>
+    <string name="style_animation_slide">滑入</string>
+    <string name="style_animation_system">系统</string>
+    <string name="style_animation_none">无</string>
+    <string name="style_animation_speed">速度</string>
+    <string name="style_animation_corners">圆角</string>
+    <string name="style_animation_module">配合 Omalauncher+ 的 KernelSU 模块可完整播放；没有它则为简单放大</string>
 </resources>

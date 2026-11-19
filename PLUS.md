@@ -13,3 +13,9 @@
 
 Сборка: GitHub Actions (`.github/workflows/plus.yml`) собирает APK, подписанный отладочным ключом; на телефоне он
 переподписывается своим ключом, который никуда не загружается.
+- **Свои анимации открытия приложений** (`anim/`): наборы ios, coloros, pixel, oneui (окно вырастает из иконки со
+  скруглёнными углами, главный экран отъезжает назад), fade, slide, system и none; скорость и скругление. Всё в «стиль»
+  → «анимации» или в style.toml (`animations.style`, `animations.speed`, `animations.corners`). Лаунчер сам рисует
+  переход (remote transition), для этого нужно системное разрешение CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS: его даёт
+  модуль KernelSU из `ksu-module/` (лаунчер становится priv-app). Без модуля — простое увеличение из точки нажатия.
+  Скрытые классы Android берутся из заглушек `hidden-api-stubs/` при сборке и из системы при работе.

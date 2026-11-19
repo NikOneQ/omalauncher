@@ -1,0 +1,226 @@
+package dev.omalauncher.anim
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ValueAnimator
+import android.graphics.Rect
+import android.graphics.RectF
+import android.os.Build
+import android.os.Handler
+import android.os.IBinder
+import android.os.Looper
+import android.util.Log
+import android.view.SurfaceControl
+import android.window.IRemoteTransition
+import android.window.IRemoteTransitionFinishedCallback
+import android.window.TransitionInfo
+import android.window.WindowAnimationState
+import androidx.annotation.RequiresApi
+import java.lang.reflect.Method
+import kotlin.math.max
+import kotlin.math.min
+
+/**
+ * Omalauncher+: plays an app's opening as the launcher, the way a phone's own launcher does: Android hands over the
+ * windows of the transition, and each frame moves, scales, crops and rounds them here. The app grows out of [from],
+ * the icon tapped (screen pixels), or fades or slides in for the styles that don't start at the icon; home recedes
+ * behind it. Needs CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS; see [LaunchAnimations].
+ */
+@RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+internal class LaunchTransition(
+    private val from: RectF,
+    private val style: LaunchStyle,
+    private val speed: Float,
+    /** The window's corner radius in pixels as it reaches full size. */
+    private val cornerPx: Float,
+    private val ownPackage: String,
+) : IRemoteTransition.Stub() {
+    private val main = Handler(Looper.getMainLooper())
+
+    override fun startAnimation(
+        token: IBinder?,
+        info: TransitionInfo,
+        t: SurfaceControl.Transaction,
+        finishCallback: IRemoteTransitionFinishedCallback,
+    ) {
+        main.post { play(info, t, finishCallback) }
+    }
+
+    // Another transition merging into this one: the shell plays it on its own once this one finishes.
+    override fun mergeAnimation(
+        transition: IBinder?,
+        info: TransitionInfo?,
+        t: SurfaceControl.Transaction?,
+        mergeTarget: IBinder?,
+        finishCallback: IRemoteTransitionFinishedCallback?,
+    ) {}
+
+    override fun takeOverAnimation(
+        transition: IBinder?,
+        info: TransitionInfo?,
+        startTransaction: SurfaceControl.Transaction?,
+        finishCallback: IRemoteTransitionFinishedCallback?,
+        states: Array<out WindowAnimationState>?,
+    ) {}
+
+    override fun onTransitionConsumed(
+        transition: IBinder?,
+        aborted: Boolean,
+    ) {}
+
+    private class Window(
+        val leash: SurfaceControl,
+        /** Where the shell put it: its parent-relative offset. */
+        val baseX: Float,
+        val baseY: Float,
+        val width: Int,
+        val height: Int,
+        /** Its end bounds on screen. */
+        val end: Rect,
+    )
+
+    private fun play(
+        info: TransitionInfo,
+        t: SurfaceControl.Transaction,
+        finish: IRemoteTransitionFinishedCallback,
+    ) {
+        val opening = mutableListOf<Window>()
+        val home = mutableListOf<Window>()
+        try {
+            for (change in info.changes) {
+                val leash = change.leash ?: continue
+                val end = change.endAbsBounds
+                val offset = change.endRelOffset
+                val w = Window(leash, offset.x.toFloat(), offset.y.toFloat(), end.width(), end.height(), Rect(end))
+                val pkg = change.taskInfo?.baseActivity?.packageName ?: change.taskInfo?.topActivity?.packageName
+                when (change.mode) {
+                    TRANSIT_OPEN, TRANSIT_TO_FRONT -> {
+                        t.show(leash)
+                        if (pkg != ownPackage) opening += w else home += w
+                    }
+                    TRANSIT_CLOSE, TRANSIT_TO_BACK -> if (pkg == ownPackage) home += w
+                }
+            }
+        } catch (e: Throwable) {
+            Log.w(TAG, "transition not understood; shown as it ends", e)
+        }
+        val target = opening.firstOrNull()
+        if (target == null) {
+            t.apply()
+            done(finish)
+            return
+        }
+        frame(t, target, home, 0f)
+        t.apply()
+        val animator = ValueAnimator.ofFloat(0f, 1f)
+        animator.duration = style.curve.durationMs(speed)
+        animator.interpolator = style.curve.interpolator(speed)
+        animator.addUpdateListener {
+            val tx = SurfaceControl.Transaction()
+            frame(tx, target, home, it.animatedValue as Float)
+            tx.apply()
+        }
+        animator.addListener(
+            object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator) {
+                    val tx = SurfaceControl.Transaction()
+                    reset(tx, target)
+                    home.forEach { reset(tx, it) }
+                    tx.apply()
+                    done(finish)
+                }
+            },
+        )
+        animator.start()
+    }
+
+    /** Puts the windows where they are at progress [p]: 0 at the start, 1 at the end, past 1 when a spring overshoots. */
+    private fun frame(
+        tx: SurfaceControl.Transaction,
+        app: Window,
+        home: List<Window>,
+        p: Float,
+    ) {
+        val end = app.end
+        val rect =
+            when (style.origin) {
+                LaunchStyle.Origin.Icon ->
+                    RectF(lerp(from.left, end.left.toFloat(), p), lerp(from.top, end.top.toFloat(), p), lerp(from.right, end.right.toFloat(), p), lerp(from.bottom, end.bottom.toFloat(), p))
+                LaunchStyle.Origin.Screen -> {
+                    val s = lerp(0.94f, 1f, p)
+                    RectF(end).apply { inset(width() * (1 - s) / 2, height() * (1 - s) / 2) }
+                }
+                LaunchStyle.Origin.Slide -> RectF(end).apply { offset(0f, (1 - p) * height() * 0.18f) }
+            }
+        // Scaled evenly by width, and cropped to the rect's height around the window's middle.
+        val s = max(rect.width() / app.width, 0.01f)
+        val cropH = min(app.height.toFloat(), rect.height() / s)
+        val cropTop = (app.height - cropH) / 2
+        tx.setCrop(app.leash, Rect(0, cropTop.toInt(), app.width, (cropTop + cropH).toInt()))
+        tx.setScale(app.leash, s, s)
+        tx.setPosition(app.leash, app.baseX + rect.left - end.left, app.baseY + rect.top - end.top - cropTop * s)
+        val radius =
+            if (style.origin == LaunchStyle.Origin.Icon) lerp(from.width() * ICON_CORNER, cornerPx, min(p, 1f)) else cornerPx
+        cornerRadius(tx, app.leash, radius / s)
+        tx.setAlpha(
+            app.leash,
+            when (style.origin) {
+                LaunchStyle.Origin.Icon -> min(1f, p / 0.12f)
+                else -> min(1f, max(p, 0f))
+            },
+        )
+        val zoom = 1 - style.homeZoom * min(max(p, 0f), 1f)
+        for (h in home) {
+            tx.setScale(h.leash, zoom, zoom)
+            tx.setPosition(h.leash, h.baseX + h.width * (1 - zoom) / 2, h.baseY + h.height * (1 - zoom) / 2)
+        }
+    }
+
+    private fun reset(
+        tx: SurfaceControl.Transaction,
+        w: Window,
+    ) {
+        tx.setCrop(w.leash, Rect(0, 0, w.width, w.height))
+        tx.setScale(w.leash, 1f, 1f)
+        tx.setPosition(w.leash, w.baseX, w.baseY)
+        tx.setAlpha(w.leash, 1f)
+        cornerRadius(tx, w.leash, 0f)
+    }
+
+    private fun done(finish: IRemoteTransitionFinishedCallback) {
+        runCatching { finish.onTransitionFinished(null, null) }.onFailure { Log.w(TAG, "finish not delivered", it) }
+    }
+
+    companion object {
+        private const val TAG = "LaunchTransition"
+
+        // WindowManager's transition modes, hidden from the SDK.
+        private const val TRANSIT_OPEN = 1
+        private const val TRANSIT_CLOSE = 2
+        private const val TRANSIT_TO_FRONT = 3
+        private const val TRANSIT_TO_BACK = 4
+
+        /** An icon's corner radius as a share of its width, about a squircle's. */
+        private const val ICON_CORNER = 0.24f
+
+        private val setCornerRadius: Method? by lazy {
+            runCatching {
+                SurfaceControl.Transaction::class.java.getMethod("setCornerRadius", SurfaceControl::class.java, Float::class.javaPrimitiveType)
+            }.onFailure { Log.w(TAG, "no rounded corners", it) }.getOrNull()
+        }
+
+        private fun cornerRadius(
+            tx: SurfaceControl.Transaction,
+            leash: SurfaceControl,
+            radius: Float,
+        ) {
+            runCatching { setCornerRadius?.invoke(tx, leash, radius) }
+        }
+
+        private fun lerp(
+            a: Float,
+            b: Float,
+            p: Float,
+        ) = a + (b - a) * p
+    }
+}

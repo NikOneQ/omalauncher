@@ -2,6 +2,8 @@ package dev.omalauncher
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager
+import android.view.MotionEvent
+import dev.omalauncher.anim.LaunchAnimations
 import android.app.role.RoleManager
 import android.content.Intent
 import android.content.Context
@@ -54,6 +56,12 @@ class MainActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(newBase)
         AppLanguage.applyTo(this)
+    }
+
+    /** Omalauncher+: where home was last touched, for the app that tap opens to grow out of (LaunchAnimations). */
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        LaunchAnimations.onTouch(window.decorView, ev)
+        return super.dispatchTouchEvent(ev)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

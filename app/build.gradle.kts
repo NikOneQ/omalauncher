@@ -39,8 +39,8 @@ android {
         applicationId = "dev.omalauncher.plus"
         minSdk = 29
         targetSdk = 37
-        versionCode = 4002
-        versionName = "1.7.0.2"
+        versionCode = 4003
+        versionName = "1.7.0.3"
         ndk { abiFilters += "arm64-v8a" }
     }
 
@@ -95,7 +95,7 @@ android {
         release {
             // Shrinks the APK and drops what the app doesn't use, like the owl module's unused parts.
             isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-sherpa.pro")
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-sherpa.pro", "proguard-plus.pro")
             signingConfig = signingConfigs.getByName(if (uploadKey != null) "release" else "debug")
         }
     }
@@ -143,6 +143,10 @@ dependencies {
     implementation(libs.zxing.core)
     implementation(project(":owl"))
     implementation(files(sherpaAar))
+    // Omalauncher+: the framework's hidden remote-transition classes at compile time only (hidden-api-stubs/), and the
+    // way to reach them at run time, for the launch animations (anim/).
+    compileOnly(files("../hidden-api-stubs/hidden-api-stubs.jar"))
+    implementation(libs.hiddenapibypass)
     "playImplementation"(libs.play.app.update)
     // Play's library brings fragment 1.0.0, too old for registerForActivityResult.
     "playImplementation"(libs.androidx.fragment)

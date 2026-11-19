@@ -1,0 +1,35 @@
+#!/sbin/sh
+##########################################################################################
+#
+# Magisk / KernelSU / APatch Module Installer
+#
+##########################################################################################
+
+UMASK=022
+OUTFD=$2
+ZIPFILE=$3
+
+# Find root manager utility functions
+for util in \
+  /data/adb/magisk/util_functions.sh \
+  /data/adb/ksu/bin/util_functions.sh \
+  /data/adb/ap/bin/util_functions.sh \
+  /data/adb/ap/util_functions.sh; do
+  if [ -f "$util" ]; then
+    . "$util"
+    break
+  fi
+done
+
+# If running within a supported root manager installer
+if type install_module >/dev/null 2>&1; then
+  install_module
+  exit 0
+fi
+
+# Fallback direct installer
+MODPATH="/data/adb/modules/omalauncher_plus_system"
+mkdir -p "$MODPATH" 2>/dev/null
+unzip -o "$ZIPFILE" -x 'META-INF/*' -d "$MODPATH" >&2
+chmod 0755 "$MODPATH"/*.sh 2>/dev/null
+exit 0

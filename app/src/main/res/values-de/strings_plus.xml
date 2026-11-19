@@ -11,4 +11,17 @@
     <string name="plus_move_notice_done">Übernommen: Widgets, Startbildschirm, Stil, Themes und Linux sind jetzt hier.</string>
     <string name="plus_move_notice_failed">Übernehmen aus Omalauncher ist fehlgeschlagen; die Daten beider Launcher sind unverändert.</string>
     <string name="style_wallpaper_sync">gleich wie androids hintergrund</string>
+    <string name="style_animations">animationen</string>
+    <string name="style_animation">apps öffnen</string>
+    <string name="style_animation_ios">ios</string>
+    <string name="style_animation_coloros">coloros</string>
+    <string name="style_animation_pixel">pixel</string>
+    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_fade">einblenden</string>
+    <string name="style_animation_slide">hochschieben</string>
+    <string name="style_animation_system">system</string>
+    <string name="style_animation_none">keine</string>
+    <string name="style_animation_speed">tempo</string>
+    <string name="style_animation_corners">ecken</string>
+    <string name="style_animation_module">voll mit dem kernelsu-modul von omalauncher+; ohne es ein einfaches vergrößern</string>
 </resources>
