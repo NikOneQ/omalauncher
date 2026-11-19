@@ -24,6 +24,21 @@ object CloseToHome {
     private const val TAG = "CloseToHome"
     private var context: Context? = null
 
+    /**
+     * Where SystemUI's back preview left the app's window as the finger let go (screen pixels, its corner radius and when):
+     * the closing that follows starts there instead of from the full screen.
+     */
+    @Volatile var handoff: Handoff? = null
+
+    class Handoff(
+        val rect: android.graphics.RectF,
+        val cornerPx: Float,
+        val at: Long,
+    ) {
+        /** Whether the closing it belongs to is the one starting now. */
+        val fresh get() = android.os.SystemClock.uptimeMillis() - at < 1500
+    }
+
     fun init(context: Context) {
         this.context = context.applicationContext
     }
@@ -50,7 +65,10 @@ object CloseToHome {
                 val blur = LauncherStyle.style[Style.ANIMATION_BLUR].toFloat()
                 Log.i(TAG, "app closing to home, as $key")
                 android.os.Handler(android.os.Looper.getMainLooper()).post { HomeArrival.settle() }
-                LaunchTransition(null, style, speed, corner, ctx.packageName, density, blur, closing = true)
+                val held = handoff?.takeIf { it.fresh }
+                handoff = null
+                Log.i(TAG, "app closing to home, as $key, from ${if (held != null) "the back preview" else "the full screen"}")
+                LaunchTransition(null, style, speed, corner, ctx.packageName, density, blur, closing = true, handoffRect = held?.rect, handoffCorner = held?.cornerPx ?: 0f)
                     .startAnimation(token, info, t, finishCallback)
             }
 

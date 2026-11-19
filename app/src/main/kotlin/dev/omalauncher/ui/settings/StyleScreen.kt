@@ -202,6 +202,7 @@ fun StyleScreen(
             NumberSlider(R.string.style_animation_speed, style, Style.ANIMATION_SPEED)
             Stepper(R.string.style_animation_corners, style, Style.ANIMATION_CORNERS)
             NumberSlider(R.string.style_animation_blur, style, Style.ANIMATION_BLUR)
+            Flag(R.string.style_animation_back_preview, R.string.style_on, R.string.style_off, style, Style.ANIMATION_BACK_PREVIEW)
             val animationContext = LocalContext.current
             if (!remember { LaunchAnimations.privileged(animationContext) }) OptionHint(stringResource(R.string.style_animation_module))
             Heading(R.string.style_screens)

@@ -25,4 +25,5 @@
     <string name="style_animation_corners">esquinas</string>
     <string name="style_animation_module">completa con el módulo de KernelSU de Omalauncher+; sin él, un simple aumento</string>
     <string name="style_animation_blur">desenfoque</string>
+    <string name="style_animation_back_preview">la ventana sigue al dedo en todas las apps</string>
 </resources>

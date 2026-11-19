@@ -26,4 +26,5 @@
     <string name="style_animation_corners">corners</string>
     <string name="style_animation_module">plays in full with the Omalauncher+ KernelSU module; without it, a simpler scale-up</string>
     <string name="style_animation_blur">blur</string>
+    <string name="style_animation_back_preview">window follows the finger in every app</string>
 </resources>

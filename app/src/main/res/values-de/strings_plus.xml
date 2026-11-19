@@ -25,4 +25,5 @@
     <string name="style_animation_corners">ecken</string>
     <string name="style_animation_module">voll mit dem kernelsu-modul von omalauncher+; ohne es ein einfaches vergrößern</string>
     <string name="style_animation_blur">unschärfe</string>
+    <string name="style_animation_back_preview">fenster folgt dem finger in jeder app</string>
 </resources>

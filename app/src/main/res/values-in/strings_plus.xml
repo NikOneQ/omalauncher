@@ -25,4 +25,5 @@
     <string name="style_animation_corners">sudut</string>
     <string name="style_animation_module">penuh dengan modul KernelSU Omalauncher+; tanpanya, pembesaran sederhana</string>
     <string name="style_animation_blur">buram</string>
+    <string name="style_animation_back_preview">jendela mengikuti jari di semua aplikasi</string>
 </resources>

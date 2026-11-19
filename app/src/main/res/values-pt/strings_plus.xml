@@ -25,4 +25,5 @@
     <string name="style_animation_corners">cantos</string>
     <string name="style_animation_module">completa com o módulo KernelSU do Omalauncher+; sem ele, um aumento simples</string>
     <string name="style_animation_blur">desfoque</string>
+    <string name="style_animation_back_preview">a janela segue o dedo em todos os apps</string>
 </resources>

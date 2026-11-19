@@ -25,4 +25,5 @@
     <string name="style_animation_corners">coins</string>
     <string name="style_animation_module">complète avec le module KernelSU d\'Omalauncher+ ; sans lui, un simple agrandissement</string>
     <string name="style_animation_blur">flou</string>
+    <string name="style_animation_back_preview">la fenêtre suit le doigt dans toutes les apps</string>
 </resources>

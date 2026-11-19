@@ -25,4 +25,5 @@
     <string name="style_animation_corners">скругление</string>
     <string name="style_animation_module">полностью работает с модулем Omalauncher+ для KernelSU; без него — простое увеличение</string>
     <string name="style_animation_blur">размытие</string>
+    <string name="style_animation_back_preview">окно за пальцем во всех приложениях</string>
 </resources>

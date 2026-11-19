@@ -40,6 +40,9 @@ internal class LaunchTransition(
     private val blurScale: Float,
     /** Played backwards for an app closing to home (CloseToHome): out of the screen into its icon. */
     private val closing: Boolean = false,
+    /** For [closing]: where SystemUI's back preview left the window (CloseToHome.handoff), to start from there. */
+    private val handoffRect: RectF? = null,
+    private val handoffCorner: Float = 0f,
 ) : IRemoteTransition.Stub() {
     private val main = Handler(Looper.getMainLooper())
 
@@ -155,7 +158,9 @@ internal class LaunchTransition(
                 override fun onAnimationEnd(animation: Animator) {
                     val tx = SurfaceControl.Transaction()
                     // A closed app stays hidden until Android takes it away; an opened one is left whole.
-                    if (closing) tx.setAlpha(target.leash, 0f) else reset(tx, target)
+                    reset(tx, target)
+                    // A closed app is hidden whole, so whatever opens it next (Recents too) finds it as it was.
+                    if (closing) tx.setVisibility(target.leash, false)
                     home.forEach { reset(tx, it) }
                     blur?.let { tx.reparent(it, null) }
                     tx.apply()
@@ -230,7 +235,12 @@ internal class LaunchTransition(
         val cardCorner = cornerPx * 1.6f
         val rect: RectF
         val radius: Float
-        if (q < CARD_SHARE) {
+        val held = handoffRect
+        if (held != null) {
+            // Already a card under the finger: straight on from there into the icon.
+            rect = lerpRect(held, icon, q)
+            radius = lerp(handoffCorner, icon.width() * ICON_CORNER, min(max(q, 0f), 1f))
+        } else if (q < CARD_SHARE) {
             val f = q / CARD_SHARE
             val e = 1 - (1 - f) * (1 - f)
             rect = lerpRect(end, card, e)

@@ -25,4 +25,5 @@
     <string name="style_animation_corners">角の丸み</string>
     <string name="style_animation_module">Omalauncher+ の KernelSU モジュールで完全に再生。なしでは単純な拡大</string>
     <string name="style_animation_blur">ぼかし</string>
+    <string name="style_animation_back_preview">すべてのアプリで指に追従</string>
 </resources>
