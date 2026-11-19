@@ -20,24 +20,28 @@ enum class LaunchStyle(
     val curve: Curve,
     /** How far home recedes behind the opening app: 0.08 shrinks it to 92%. */
     val homeZoom: Float,
+    /** How visible home stays behind it, 1 not dimmed at all. */
+    val homeAlpha: Float,
+    /** For [Origin.Icon], the share of the motion over which the window fades in over the icon; for the others, where it starts: its scale (Screen) or how far below (Slide, in screen heights). */
+    val lead: Float,
 ) {
-    /** A soft spring out of the icon, home sinking back a little, as on iPhones. */
-    IOS("ios", Origin.Icon, Curve.Spring(response = 0.46f, damping = 0.86f), 0.08f),
+    /** A spring with a visible bounce out of the icon; home sinks back and darkens, as on iPhones. */
+    IOS("ios", Origin.Icon, Curve.Spring(response = 0.55f, damping = 0.76f), homeZoom = 0.14f, homeAlpha = 0.5f, lead = 0.10f),
 
-    /** Quicker and firmer, as on OPPO and OnePlus phones. */
-    COLOROS("coloros", Origin.Icon, Curve.Spring(response = 0.36f, damping = 0.92f), 0.06f),
+    /** Quick and firm, no bounce to speak of, home dimming a little, as on OPPO and OnePlus phones. */
+    COLOROS("coloros", Origin.Icon, Curve.Spring(response = 0.30f, damping = 0.97f), homeZoom = 0.08f, homeAlpha = 0.8f, lead = 0.05f),
 
-    /** Material's emphasized curve, as on Pixels. */
-    PIXEL("pixel", Origin.Icon, Curve.Eased(450, 0.05f, 0.7f, 0.1f, 1f), 0.04f),
+    /** Material's emphasized easing, no bounce, the app cross-fading in over the icon slowly; home stays put, as on Pixels. */
+    PIXEL("pixel", Origin.Icon, Curve.Eased(520, 0.05f, 0.7f, 0.1f, 1f), homeZoom = 0f, homeAlpha = 1f, lead = 0.35f),
 
-    /** Out of the icon without any bounce, home barely moving, close to One UI's own. */
-    ONEUI("oneui", Origin.Icon, Curve.Spring(response = 0.40f, damping = 1f), 0.03f),
+    /** Stock One UI: out of the icon on a critically damped spring, home easing back a touch. */
+    ONEUI("oneui", Origin.Icon, Curve.Spring(response = 0.42f, damping = 1f), homeZoom = 0.05f, homeAlpha = 0.9f, lead = 0.12f),
 
-    /** The app fades in, growing slightly. */
-    FADE("fade", Origin.Screen, Curve.Eased(260, 0.2f, 0f, 0f, 1f), 0f),
+    /** The app fades in over home, growing from 86%. */
+    FADE("fade", Origin.Screen, Curve.Eased(320, 0.2f, 0f, 0f, 1f), homeZoom = 0f, homeAlpha = 0.6f, lead = 0.86f),
 
-    /** The app slides up from below. */
-    SLIDE("slide", Origin.Slide, Curve.Eased(340, 0.2f, 0f, 0f, 1f), 0.04f),
+    /** The app slides up from the bottom of the screen. */
+    SLIDE("slide", Origin.Slide, Curve.Eased(420, 0.05f, 0.7f, 0.1f, 1f), homeZoom = 0.06f, homeAlpha = 0.8f, lead = 1f),
     ;
 
     enum class Origin { Icon, Screen, Slide }

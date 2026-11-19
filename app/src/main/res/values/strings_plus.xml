@@ -17,7 +17,7 @@
     <string name="style_animation_ios">ios</string>
     <string name="style_animation_coloros">coloros</string>
     <string name="style_animation_pixel">pixel</string>
-    <string name="style_animation_oneui">one ui</string>
+    <string name="style_animation_oneui">one ui (stock)</string>
     <string name="style_animation_fade">fade</string>
     <string name="style_animation_slide">slide</string>
     <string name="style_animation_system">system</string>

@@ -67,6 +67,7 @@ object LaunchAnimations {
      */
     fun options(context: Context): Launch {
         val key = LauncherStyle.style[Style.ANIMATION_STYLE]
+        Log.i(TAG, "opening with animations.style \"$key\", speed ${LauncherStyle.style[Style.ANIMATION_SPEED]}, privileged ${privileged(context)}")
         if (key == LaunchStyle.NONE) return Launch(null, noAnimation = true)
         val style = LaunchStyle.named(key) ?: return Launch(null, noAnimation = false)
         val speed = LauncherStyle.style[Style.ANIMATION_SPEED].toFloat().coerceIn(0.1f, 5f)

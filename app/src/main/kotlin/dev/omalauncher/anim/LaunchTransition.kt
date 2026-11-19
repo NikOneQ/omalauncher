@@ -110,6 +110,7 @@ internal class LaunchTransition(
             done(finish)
             return
         }
+        Log.i(TAG, "playing ${style.key} at $speed: ${opening.size} opening, ${home.size} home, ${style.curve.durationMs(speed)} ms")
         frame(t, target, home, 0f)
         t.apply()
         val animator = ValueAnimator.ofFloat(0f, 1f)
@@ -147,10 +148,10 @@ internal class LaunchTransition(
                 LaunchStyle.Origin.Icon ->
                     RectF(lerp(from.left, end.left.toFloat(), p), lerp(from.top, end.top.toFloat(), p), lerp(from.right, end.right.toFloat(), p), lerp(from.bottom, end.bottom.toFloat(), p))
                 LaunchStyle.Origin.Screen -> {
-                    val s = lerp(0.94f, 1f, p)
+                    val s = lerp(style.lead, 1f, p)
                     RectF(end).apply { inset(width() * (1 - s) / 2, height() * (1 - s) / 2) }
                 }
-                LaunchStyle.Origin.Slide -> RectF(end).apply { offset(0f, (1 - p) * height() * 0.18f) }
+                LaunchStyle.Origin.Slide -> RectF(end).apply { offset(0f, (1 - p) * height() * style.lead) }
             }
         // Scaled evenly by width, and cropped to the rect's height around the window's middle.
         val s = max(rect.width() / app.width, 0.01f)
@@ -165,12 +166,14 @@ internal class LaunchTransition(
         tx.setAlpha(
             app.leash,
             when (style.origin) {
-                LaunchStyle.Origin.Icon -> min(1f, p / 0.12f)
+                LaunchStyle.Origin.Icon -> min(1f, max(p, 0f) / style.lead)
                 else -> min(1f, max(p, 0f))
             },
         )
-        val zoom = 1 - style.homeZoom * min(max(p, 0f), 1f)
+        val q = min(max(p, 0f), 1f)
+        val zoom = 1 - style.homeZoom * q
         for (h in home) {
+            tx.setAlpha(h.leash, lerp(1f, style.homeAlpha, q))
             tx.setScale(h.leash, zoom, zoom)
             tx.setPosition(h.leash, h.baseX + h.width * (1 - zoom) / 2, h.baseY + h.height * (1 - zoom) / 2)
         }
