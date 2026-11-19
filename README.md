@@ -1,4 +1,82 @@
-# Omalauncher
+# Omalauncher+
+
+> **This is a fork.** Omalauncher+ is an unofficial fork of
+> [Omalauncher](https://github.com/SimonSchubert/omalauncher) by Simon Schubert. It is not made, reviewed or
+> supported by the original author, and it is not the app on Google Play. Everything below the line further down is
+> the original project's README, kept as it is.
+
+Omalauncher+ installs **next to** Omalauncher as an app of its own (`dev.omalauncher.plus`), so the original keeps
+working until you're happy to switch. It keeps all of Omalauncher (themes, OWL widgets, the Linux system, coding
+agents) and adds animations like a phone maker's own launcher has, a shared wallpaper, and a one-tap move of all your
+data from Omalauncher.
+
+## What's different from Omalauncher
+
+| | Omalauncher | Omalauncher+ |
+|---|---|---|
+| Opening an app | no animation | the app grows out of its icon with rounded corners; home recedes, dims and blurs behind it |
+| Animation styles | – | **ios**, **coloros**, **pixel**, **one ui** (from the icon), **fade**, **slide**, **system**, **none**; speed, blur and corner radius to taste |
+| Closing an app to home | Android's / One UI's | flies back into its icon in the same style, for every app, including ones that handle back themselves |
+| Back gesture | Android's | the app's window shrinks under your finger in **every** app (card, slide, subtle or follow), home's blurred background behind it; it flies on into the icon if the app closes and springs back if it doesn't |
+| Coming back home | – | home rises back from blurred and receded in the chosen style |
+| Wallpaper | the launcher's own | Android's wallpaper (home and lock screen) follows the launcher's background, store themes included |
+| Moving from Omalauncher | – | one tap (settings, or the first screen): widgets, home, style, themes and the whole Linux are copied over with root |
+| Settings | – | an **animations** page: styles with descriptions, the back gesture, and restarts of System UI, the launcher, and a soft reboot (a zygote restart, not ksud) |
+
+Everything else works as in Omalauncher, and this fork follows its code.
+
+## What it needs
+
+- **Root** (KernelSU or Magisk) for moving your data in and for the restarts. Temporary root is fine.
+- **LSPosed or Vector** with the **Omalauncher+ system bridge** module (`vector-module/`) for the full animations.
+  Its scope is *System Framework* (it answers one permission check, `CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS`, for
+  this app only) and *System UI* (it hands the launcher the back gesture and the closing animation, as SystemUI
+  hands them to a phone's own launcher). Nothing is mounted into `/system`, so a reboot without root simply turns
+  it off.
+- Without the module, the launcher still works and falls back to Android's simple scale-up animation.
+
+The animations reach into Android's private window APIs (remote transitions, WMShell's back animation and transition
+filters). They were made and tested on a **Samsung Galaxy Z Fold6 with One UI 9 / Android 17**; on other phones and
+versions parts of them may do nothing, and the launcher falls back.
+
+## Getting it
+
+There are no releases. GitHub Actions (`.github/workflows/plus.yml`) builds the APK on every push and keeps it as the
+`omalauncher-plus-apk` artifact, signed with a debug key: sign it with a key of your own (`apksigner sign`) and keep
+using that key, or Android won't install the next build over it. The module builds with `vector-module/build.sh`.
+
+To switch: install Omalauncher+, open it, tap **move everything from omalauncher**, allow root, wait for it to open
+again, and make it the default home app. Omalauncher keeps its own copy until you remove it.
+
+## Where the changes are
+
+- `app/src/main/kotlin/dev/omalauncher/anim/`: the animations (opening, closing, back to home, home's return)
+- `storage/MoveFromOmalauncher.kt`: the move, which also points proot's hard-link symlinks at the new place
+- `theme/SystemWallpaperSync.kt`: the shared wallpaper
+- `ui/settings/AnimationsScreen.kt`: the animations page
+- `hidden-api-stubs/`: compile-time stand-ins for Android's hidden window classes
+- `vector-module/`: the LSPosed/Vector module
+- `ksu-module/`: an older approach that mounts the app as a system app; not recommended with temporary root
+
+## License and credits
+
+MIT, like Omalauncher: © 2026 Simon Schubert and contributors, see [LICENSE](LICENSE). The changes in this fork are
+under the same license. All credit for the launcher itself goes to the original project.
+
+### Коротко по-русски
+
+**Omalauncher+ — неофициальный форк** [Omalauncher](https://github.com/SimonSchubert/omalauncher). Ставится рядом с
+оригиналом отдельным приложением. Добавляет анимации как у лаунчеров производителей (наборы в стиле iOS, ColorOS,
+Pixel, One UI и другие), окно за пальцем при жесте «назад» во всех приложениях, закрытие приложений в иконку, общие
+обои с Android и перенос всех данных из Omalauncher в один клик. Для полных анимаций нужен root и модуль для
+LSPosed/Vector из `vector-module/`; без него лаунчер работает с простыми анимациями. Проверено на Galaxy Z Fold6
+(One UI 9, Android 17).
+
+---
+
+*The original Omalauncher README follows. Its Google Play link is the original app, not this fork.*
+
+## Omalauncher (original)
 
 An Android home screen with the look of [Omarchy](https://omarchy.org), and an
 optional Arch Linux ARM system next to your phone apps. Omalauncher runs the
@@ -31,7 +109,7 @@ window opens as its own Android task, with its own card in Recents.
 Needs an arm64 phone with Android 10 or newer. Without Linux, the launcher still
 has the themes, wallpapers, Android apps and the widgets that don't run commands.
 
-## Using it
+### Using it
 
 The bar: the one input at the bottom of the home screen opens apps and asks
 coding agents. Focusing it opens the list of Linux and Android apps; typing
@@ -115,7 +193,7 @@ click, drag scrolls; apps with touch support (foot, GTK) get real touch.
 Android keeps Super on its own, Super+Space, Super+A and Super+Enter for
 itself, so Omarchy's Super+Space and Super+Enter can't be used.
 
-## Building
+### Building
 
 ```sh
 ./scripts/fetch-proot.sh          # Termux's proot -> app/src/main/jniLibs (needs bsdtar)
@@ -138,7 +216,7 @@ In debug builds you can launch guest commands with
 - [AGENTS.md](AGENTS.md): working on the code, as a person or a coding agent:
   build and test, the rules for changes, commit style
 
-## Layout
+### Layout
 
 - `app/`: the Android app (Kotlin, Jetpack Compose, and the JNI bridge in `src/main/cpp`)
 - `owl/`: the widget language and the `owl` command line, plain Kotlin
@@ -147,7 +225,7 @@ In debug builds you can launch guest commands with
 - `fastlane/`: the Play listing and the upload lanes
 - `scripts/`: fetching proot and theme colors, rendering icons, screenshots and widget previews
 
-## License
+### License
 
 MIT, see [LICENSE](LICENSE), for Omalauncher's own code and artwork. The
 coding agents' logos, the symbol font and Omarchy's theme colors are not
