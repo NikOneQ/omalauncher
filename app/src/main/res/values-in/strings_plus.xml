@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">pindahkan semua dari omalauncher</string>
+    <string name="plus_move_subtitle">widget, beranda, gaya, tema, dan Linux, dengan root</string>
+    <string name="plus_move_confirm_title">pindahkan dari omalauncher?</string>
+    <string name="plus_move_confirm_message">Data launcher ini diganti dengan data Omalauncher: widget, beranda, gaya, tema, dan seluruh Linux. Kedua launcher berhenti selama menyalin, beberapa menit untuk Linux yang besar, lalu launcher ini terbuka lagi. Omalauncher tetap menyimpan salinannya.</string>
+    <string name="plus_move_confirm">pindahkan</string>
+    <string name="plus_move_waiting">menunggu root…</string>
+    <string name="plus_move_no_root">Root diperlukan untuk membaca data aplikasi lain, dan su tidak menjawab sebagai root. Izinkan launcher ini di pengelola root lalu coba lagi.</string>
+    <string name="plus_move_notice_moving">Memindahkan semua dari Omalauncher… Launcher ini terbuka lagi setelah selesai.</string>
+    <string name="plus_move_notice_done">Selesai: widget, beranda, gaya, tema, dan Linux sekarang ada di sini.</string>
+    <string name="plus_move_notice_failed">Gagal memindahkan dari Omalauncher; data kedua launcher tetap seperti semula.</string>
+    <string name="style_wallpaper_sync">sama dengan wallpaper android</string>
+</resources>

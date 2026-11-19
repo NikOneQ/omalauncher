@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">从 omalauncher 迁移全部内容</string>
+    <string name="plus_move_subtitle">小部件、主屏幕、样式、主题和 Linux，需要 root</string>
+    <string name="plus_move_confirm_title">从 omalauncher 迁移？</string>
+    <string name="plus_move_confirm_message">此启动器的数据将被 Omalauncher 的数据替换：小部件、主屏幕、样式、主题和整个 Linux。复制期间两个启动器都会停止（Linux 较大时需要几分钟），之后此启动器会重新打开。Omalauncher 保留自己的副本。</string>
+    <string name="plus_move_confirm">迁移</string>
+    <string name="plus_move_waiting">正在等待 root…</string>
+    <string name="plus_move_no_root">读取其他应用的数据需要 root，但 su 没有以 root 身份响应。请在 root 管理器中允许此启动器，然后重试。</string>
+    <string name="plus_move_notice_moving">正在从 Omalauncher 迁移全部内容… 完成后此启动器会重新打开。</string>
+    <string name="plus_move_notice_done">已迁移：小部件、主屏幕、样式、主题和 Linux 现在都在这里。</string>
+    <string name="plus_move_notice_failed">从 Omalauncher 迁移失败；两个启动器的数据保持不变。</string>
+    <string name="style_wallpaper_sync">与 android 壁纸相同</string>
+</resources>

@@ -165,6 +165,7 @@ fun StyleScreen(
                 onRemove = { removing = it },
             )
             store.current?.let { BackgroundSection(store, it) }
+            Flag(R.string.style_wallpaper_sync, R.string.style_on, R.string.style_off, runtime.style, Style.WALLPAPER_SYNC)
             // Style choices don't depend on a theme, so they're offered before themes are downloaded too.
             Heading(R.string.style_home_screen)
             val style = runtime.style

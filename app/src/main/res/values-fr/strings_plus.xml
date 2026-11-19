@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">tout reprendre d\'omalauncher</string>
+    <string name="plus_move_subtitle">widgets, accueil, style, thèmes et Linux, avec root</string>
+    <string name="plus_move_confirm_title">reprendre d\'omalauncher ?</string>
+    <string name="plus_move_confirm_message">Les données de ce launcher sont remplacées par celles d\'Omalauncher : widgets, accueil, style, thèmes et tout Linux. Les deux launchers s\'arrêtent pendant la copie, quelques minutes pour un gros Linux, puis celui-ci se rouvre. Omalauncher garde sa copie.</string>
+    <string name="plus_move_confirm">reprendre</string>
+    <string name="plus_move_waiting">en attente de root…</string>
+    <string name="plus_move_no_root">Il faut root pour lire les données d\'une autre app, et su n\'a pas répondu en root. Autorise ce launcher dans ton gestionnaire root et réessaie.</string>
+    <string name="plus_move_notice_moving">Reprise de tout depuis Omalauncher… Ce launcher se rouvrira une fois terminé.</string>
+    <string name="plus_move_notice_done">C\'est fait : widgets, accueil, style, thèmes et Linux sont ici.</string>
+    <string name="plus_move_notice_failed">La reprise depuis Omalauncher a échoué ; les données des deux launchers sont intactes.</string>
+    <string name="style_wallpaper_sync">même fond d\'écran qu\'android</string>
+</resources>

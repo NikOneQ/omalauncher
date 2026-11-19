@@ -28,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -230,6 +231,7 @@ class ThemeStore(
         // Decodes the wallpaper on first load, unless ours is the live one.
         refreshLiveWallpaper()
         if (stale && !liveWallpaperActive) wallpaper = decodeWallpaper(bg)
+        syncSystemWallpaper(bg)
     }
 
     /** After a new release was downloaded: its themes, templates and configs. */
@@ -473,6 +475,14 @@ class ThemeStore(
         wallpaper = if (liveWallpaperActive) null else decodeWallpaper(file)
         if (file != null && isLinux()) withContext(Dispatchers.IO) { guest.linkBackground(file) }
         changeListeners.forEach { it() }
+        syncSystemWallpaper(file)
+    }
+
+    /** Omalauncher+: Android's wallpaper follows the background while wallpaper.system is on; see [SystemWallpaperSync]. */
+    private fun syncSystemWallpaper(file: File?) {
+        if (!style.style[Style.WALLPAPER_SYNC]) return
+        val live = liveWallpaperActive
+        scope.launch(Dispatchers.IO) { SystemWallpaperSync.sync(context, prefs, file, live) }
     }
 
     /**

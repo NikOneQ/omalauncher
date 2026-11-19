@@ -45,6 +45,7 @@ import dev.omalauncher.widgets.WidgetEngine
 import dev.omalauncher.widgets.market.CatalogEntry
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import dev.omalauncher.storage.MoveFromOmalauncher
 import dev.omalauncher.ui.BelowAnchorEnd
 import dev.omalauncher.ui.BracketAction
 import dev.omalauncher.ui.ChoicePopup
@@ -86,6 +87,9 @@ fun SettingsScreen(
     val roles = remember { context.getSystemService(RoleManager::class.java) }
     val homeRoleMissing = { roles.isRoleAvailable(RoleManager.ROLE_HOME) && !roles.isRoleHeld(RoleManager.ROLE_HOME) }
     var notHome by remember { mutableStateOf(homeRoleMissing()) }
+    // Omalauncher+: moving Omalauncher's data in, offered while Omalauncher is installed.
+    val canMove = remember { MoveFromOmalauncher.available(context) }
+    var moving by remember { mutableStateOf(false) }
     // Made the default (or not), or the local network allowed, in Android's settings or the permissions screen while away.
     LifecycleResumeEffect(Unit) {
         notHome = homeRoleMissing()
@@ -117,6 +121,7 @@ fun SettingsScreen(
         val needsLinux = stringResource(R.string.settings_needs_linux)
         val rows =
             listOfNotNull(
+                if (canMove) SettingsRow(R.string.plus_move_title, stringResource(R.string.plus_move_subtitle)) { moving = true } else null,
                 SettingsRow(R.string.settings_style, runtime.themes.current?.title ?: stringResource(R.string.settings_style_subtitle), onStyle),
                 SettingsRow(R.string.settings_pages, pluralStringResource(R.plurals.settings_pages_subtitle, runtime.widgets.pages.size, runtime.widgets.pages.size), onPages),
                 SettingsRow(
@@ -164,6 +169,7 @@ fun SettingsScreen(
             SettingsRows(rows)
         }
     }
+    if (moving) MoveFromOmalauncherDialog(onDismiss = { moving = false })
 }
 
 /**

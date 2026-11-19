@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">traer todo de omalauncher</string>
+    <string name="plus_move_subtitle">widgets, inicio, estilo, temas y Linux, con root</string>
+    <string name="plus_move_confirm_title">¿traer de omalauncher?</string>
+    <string name="plus_move_confirm_message">Los datos de este launcher se sustituyen por los de Omalauncher: widgets, inicio, estilo, temas y todo Linux. Los dos launchers se detienen mientras copia, unos minutos si Linux es grande, y luego este se abre de nuevo. Omalauncher conserva su copia.</string>
+    <string name="plus_move_confirm">traer</string>
+    <string name="plus_move_waiting">esperando root…</string>
+    <string name="plus_move_no_root">Hace falta root para leer los datos de otra app, y su no respondió como root. Permite este launcher en tu gestor de root y vuelve a intentarlo.</string>
+    <string name="plus_move_notice_moving">Trayendo todo de Omalauncher… Este launcher se abrirá de nuevo al terminar.</string>
+    <string name="plus_move_notice_done">Listo: widgets, inicio, estilo, temas y Linux ya están aquí.</string>
+    <string name="plus_move_notice_failed">No se pudo traer de Omalauncher; los datos de ambos launchers siguen como estaban.</string>
+    <string name="style_wallpaper_sync">igual que el fondo de android</string>
+</resources>

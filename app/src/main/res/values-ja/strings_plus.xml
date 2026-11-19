@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">omalauncher からすべて移行</string>
+    <string name="plus_move_subtitle">ウィジェット、ホーム、スタイル、テーマ、Linux（root が必要）</string>
+    <string name="plus_move_confirm_title">omalauncher から移行しますか？</string>
+    <string name="plus_move_confirm_message">このランチャーのデータが Omalauncher のものに置き換わります：ウィジェット、ホーム、スタイル、テーマ、Linux 全体。コピー中は両方のランチャーが停止し（大きな Linux なら数分）、その後このランチャーが再び開きます。Omalauncher のデータはそのまま残ります。</string>
+    <string name="plus_move_confirm">移行</string>
+    <string name="plus_move_waiting">root を待っています…</string>
+    <string name="plus_move_no_root">ほかのアプリのデータを読むには root が必要ですが、su が root として応答しませんでした。root マネージャーでこのランチャーを許可して、もう一度お試しください。</string>
+    <string name="plus_move_notice_moving">Omalauncher からすべて移行中… 終わるとこのランチャーが再び開きます。</string>
+    <string name="plus_move_notice_done">移行しました：ウィジェット、ホーム、スタイル、テーマ、Linux がこちらに来ました。</string>
+    <string name="plus_move_notice_failed">Omalauncher からの移行に失敗しました。両方のランチャーのデータは元のままです。</string>
+    <string name="style_wallpaper_sync">android の壁紙と同じにする</string>
+</resources>

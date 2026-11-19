@@ -35,11 +35,12 @@ android {
     ndkVersion = prootNdk
 
     defaultConfig {
-        applicationId = "dev.omalauncher"
+        // Omalauncher+: an app of its own next to Omalauncher, which it can take all data from (MoveFromOmalauncher).
+        applicationId = "dev.omalauncher.plus"
         minSdk = 29
         targetSdk = 37
-        versionCode = 40
-        versionName = "1.7.0"
+        versionCode = 4001
+        versionName = "1.7.0.1"
         ndk { abiFilters += "arm64-v8a" }
     }
 

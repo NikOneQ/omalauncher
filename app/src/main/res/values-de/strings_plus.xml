@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">alles aus omalauncher übernehmen</string>
+    <string name="plus_move_subtitle">widgets, startbildschirm, stil, themes und linux, mit root</string>
+    <string name="plus_move_confirm_title">aus omalauncher übernehmen?</string>
+    <string name="plus_move_confirm_message">Die Daten dieses Launchers werden durch die von Omalauncher ersetzt: Widgets, Startbildschirm, Stil, Themes und das ganze Linux. Beide Launcher halten an, solange kopiert wird, bei einem großen Linux ein paar Minuten, dann öffnet sich dieser wieder. Omalauncher behält seine Kopie.</string>
+    <string name="plus_move_confirm">übernehmen</string>
+    <string name="plus_move_waiting">warte auf root…</string>
+    <string name="plus_move_no_root">Um die Daten einer anderen App zu lesen, brauchst du Root, und su hat nicht als Root geantwortet. Erlaube diesen Launcher in deinem Root-Manager und versuch es noch mal.</string>
+    <string name="plus_move_notice_moving">Übernehme alles aus Omalauncher… Der Launcher öffnet sich wieder, wenn es fertig ist.</string>
+    <string name="plus_move_notice_done">Übernommen: Widgets, Startbildschirm, Stil, Themes und Linux sind jetzt hier.</string>
+    <string name="plus_move_notice_failed">Übernehmen aus Omalauncher ist fehlgeschlagen; die Daten beider Launcher sind unverändert.</string>
+    <string name="style_wallpaper_sync">gleich wie androids hintergrund</string>
+</resources>

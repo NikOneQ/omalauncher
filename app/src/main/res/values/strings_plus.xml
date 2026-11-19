@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Omalauncher+: moving Omalauncher's data in, and Android's wallpaper following the background. -->
+<resources>
+    <string name="plus_move_title">move everything from omalauncher</string>
+    <string name="plus_move_subtitle">widgets, home, style, themes and Linux, with root</string>
+    <string name="plus_move_confirm_title">move from omalauncher?</string>
+    <string name="plus_move_confirm_message">This launcher\'s data is replaced with Omalauncher\'s: widgets, home, style, themes and the whole Linux. Both launchers stop while it copies, a few minutes for a large Linux, then this one opens again. Omalauncher keeps its copy.</string>
+    <string name="plus_move_confirm">move</string>
+    <string name="plus_move_waiting">waiting for root…</string>
+    <string name="plus_move_no_root">Root is needed to read another app\'s data, and su didn\'t answer as root. Allow this launcher in your root manager and try again.</string>
+    <string name="plus_move_notice_moving">Moving everything from Omalauncher… This launcher opens again when it\'s done.</string>
+    <string name="plus_move_notice_done">Moved: widgets, home, style, themes and Linux are here now.</string>
+    <string name="plus_move_notice_failed">Moving from Omalauncher failed; both launchers\' data is as it was.</string>
+    <string name="style_wallpaper_sync">same as android\'s wallpaper</string>
+</resources>

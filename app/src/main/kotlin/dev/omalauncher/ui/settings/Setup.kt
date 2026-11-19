@@ -59,7 +59,9 @@ import dev.omalauncher.theme.BundledTheme
 import dev.omalauncher.theme.ThemeStore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import dev.omalauncher.storage.MoveFromOmalauncher
 import dev.omalauncher.ui.BracketAction
+import androidx.compose.ui.platform.LocalContext
 import dev.omalauncher.ui.Glyph
 import dev.omalauncher.ui.Mono
 import dev.omalauncher.ui.Palette
@@ -88,6 +90,11 @@ internal fun SetupScreen(runtime: Runtime) {
     val install = rememberLinuxInstall(runtime)
     var error by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
+    // Omalauncher+: a first run next to Omalauncher can take all of its data instead.
+    val context = LocalContext.current
+    val canMove = remember { MoveFromOmalauncher.available(context) }
+    var moving by remember { mutableStateOf(false) }
+    if (moving) MoveFromOmalauncherDialog(onDismiss = { moving = false })
 
     // Only the picked theme now; the rest download in the background once home is up.
     fun fetchTheme() {
@@ -108,6 +115,10 @@ internal fun SetupScreen(runtime: Runtime) {
                 Modifier.widthIn(max = 560.dp).fillMaxWidth().padding(horizontal = Gutter, vertical = 32.dp),
             ) {
                 Wordmark()
+                if (canMove && !started) {
+                    Spacer(Modifier.height(16.dp))
+                    BracketAction(stringResource(R.string.plus_move_title), Palette.accent) { moving = true }
+                }
                 if (started) {
                     ThemeDownloadProgress(themes.choices.firstOrNull { it.name == themes.picked }?.title?.lowercase() ?: themes.picked, error, onRetry = ::fetchTheme, onSkip = runtime::finishWelcome)
                 } else {
@@ -139,7 +150,7 @@ private fun Wordmark() {
         }
     }
     Spacer(Modifier.height(20.dp))
-    BasicText("◆ omalauncher", style = Mono.copy(color = Palette.accent, fontSize = 28.sp, fontWeight = FontWeight.Bold))
+    BasicText("◆ omalauncher+", style = Mono.copy(color = Palette.accent, fontSize = 28.sp, fontWeight = FontWeight.Bold))
 }
 
 @Composable

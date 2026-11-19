@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="plus_move_title">перенести всё из omalauncher</string>
+    <string name="plus_move_subtitle">виджеты, главный экран, стиль, темы и Linux, через root</string>
+    <string name="plus_move_confirm_title">перенести из omalauncher?</string>
+    <string name="plus_move_confirm_message">Данные этого лаунчера заменятся данными Omalauncher: виджеты, главный экран, стиль, темы и весь Linux. Пока идёт копирование, оба лаунчера остановятся (для большого Linux — несколько минут), потом этот откроется снова. У Omalauncher останется своя копия.</string>
+    <string name="plus_move_confirm">перенести</string>
+    <string name="plus_move_waiting">жду root…</string>
+    <string name="plus_move_no_root">Чтобы прочитать данные другого приложения, нужен root, а su не ответил как root. Разрешите этот лаунчер в менеджере root и попробуйте снова.</string>
+    <string name="plus_move_notice_moving">Переношу всё из Omalauncher… Лаунчер откроется снова, когда закончу.</string>
+    <string name="plus_move_notice_done">Перенесено: виджеты, главный экран, стиль, темы и Linux теперь здесь.</string>
+    <string name="plus_move_notice_failed">Перенос из Omalauncher не удался; данные обоих лаунчеров остались как были.</string>
+    <string name="style_wallpaper_sync">те же обои в android</string>
+</resources>

@@ -151,6 +151,14 @@ class Style(
         val THEME = Setting.Name("theme", "The Omarchy theme, by its directory name in ~/.local/share/omarchy/themes or ~/.config/omarchy/themes (yours win).")
         val BACKGROUND = Setting.Name("background", "A file name from the theme's backgrounds/ or ~/.config/omarchy/backgrounds/<theme>/. Unset: the theme's first.")
 
+        /** Omalauncher+: see SystemWallpaperSync. */
+        val WALLPAPER_SYNC =
+            Setting.Flag(
+                "wallpaper.system",
+                true,
+                "Android's wallpaper, home and lock screen, set to the launcher's background whenever that changes, so the phone's own screens show the same one; the home screen keeps the live wallpaper while that's Android's.",
+            )
+
         val APP_TILES = Setting.Flag("home.app-tiles", true, "Apps on home in a tile like a widget; false draws bare icons on the wallpaper.")
         val RECENT_APPS = Setting.Flag("home.recent-apps", true, "The strip of recently used apps above the prompt bar; what it shows is strip.owl in the widgets folder.")
         val EMPTY_PAGE_LEFT = Setting.Flag("home.empty-page-left", true, "The empty page left of home's leftmost, inviting a new face; false ends home at its own first page.")
@@ -273,7 +281,7 @@ object StyleFile {
     val ALL: List<Setting<*>> =
         with(Style) {
             listOf(THEME, BACKGROUND, FONT, APP_TILES, RECENT_APPS, EMPTY_PAGE_LEFT, EMPTY_PAGE_RIGHT, HOME_PAGE, COLUMNS, FORCE_SINGLE_PAGE, COVER_SCREEN, UNFOLDED_LAYOUT, UNFOLDED_COLUMNS, GAPS_IN, GAPS_OUT, TILE_OPACITY, TILE_FROST, TILE_BORDER_WIDTH, TILE_BORDER, TILE_BORDER_FOCUSED) +
-                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE) +
+                listOf(SCREEN_GAPS_OUT, SCREEN_BORDER_WIDTH, KEYBAR_GAPS_OUT, KEYBAR_BORDER_WIDTH, MONOCHROME_ICONS, ICON_PACK, CORNER_SCALE, WALLPAPER_SYNC) +
                 listOf(STATUS_BAR_SHOWN) + STATUS_BAR.all + NAVIGATION_BAR.all + listOf(TERMINAL_FONT, TERMINAL_TEXT, TERMINAL_SUGGESTIONS, SWIPE_UP, SWIPE_DOWN)
         }
 

@@ -81,7 +81,8 @@ class LauncherUpdates(
 
     internal companion object {
         const val TAG = "LauncherUpdates"
-        const val RELEASES = "https://api.github.com/repos/SimonSchubert/omalauncher/releases?per_page=20"
+        // Omalauncher+: its own releases; Omalauncher's are another app.
+        const val RELEASES = "https://api.github.com/repos/NikOneQ/omalauncher/releases?per_page=20"
         const val CHECK_EVERY = 60 * 60_000L
 
         /** F-Droid and the clients of its repositories. */

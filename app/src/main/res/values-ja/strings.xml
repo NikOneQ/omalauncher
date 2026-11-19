@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Omalauncher</string>
+    <string name="app_name">Omalauncher+</string>
     <string name="wallpaper_label">Omarchy</string>
     <string name="wallpaper_description">現在の Omarchy テーマの背景です。システムカラーもテーマに合わせて変わります。</string>
     <string name="activity_linux">Linux</string>
