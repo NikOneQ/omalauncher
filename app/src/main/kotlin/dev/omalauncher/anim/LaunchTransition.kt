@@ -77,6 +77,8 @@ internal class LaunchTransition(
         val height: Int,
         /** Its end bounds on screen. */
         val end: Rect,
+        /** A whole task, rather than a part of one (an embedded activity's TaskFragment, as WhatsApp opens with on foldables). */
+        val isTask: Boolean,
     )
 
     private fun play(
@@ -91,7 +93,7 @@ internal class LaunchTransition(
                 val leash = change.leash ?: continue
                 val end = change.endAbsBounds
                 val offset = change.endRelOffset
-                val w = Window(leash, offset.x.toFloat(), offset.y.toFloat(), end.width(), end.height(), Rect(end))
+                val w = Window(leash, offset.x.toFloat(), offset.y.toFloat(), end.width(), end.height(), Rect(end), change.taskInfo != null)
                 val pkg = change.taskInfo?.baseActivity?.packageName ?: change.taskInfo?.topActivity?.packageName
                 when (change.mode) {
                     TRANSIT_OPEN, TRANSIT_TO_FRONT -> {
@@ -104,7 +106,8 @@ internal class LaunchTransition(
         } catch (e: Throwable) {
             Log.w(TAG, "transition not understood; shown as it ends", e)
         }
-        val target = opening.firstOrNull()
+        // The app's task as a whole: its parts (TaskFragments) are inside it and move with it.
+        val target = opening.firstOrNull { it.isTask } ?: opening.firstOrNull()
         if (target == null) {
             t.apply()
             done(finish)
