@@ -23,6 +23,10 @@ internal fun MoveFromOmalauncherDialog(onDismiss: () -> Unit) {
     val scope = rememberCoroutineScope()
     var waiting by remember { mutableStateOf(false) }
     var noRoot by remember { mutableStateOf(false) }
+    // The notification's texts, read here: the move runs after this screen is gone.
+    val noticeMoving = stringResource(R.string.plus_move_notice_moving)
+    val noticeDone = stringResource(R.string.plus_move_notice_done)
+    val noticeFailed = stringResource(R.string.plus_move_notice_failed)
     ConfirmDialog(
         stringResource(R.string.plus_move_confirm_title),
         stringResource(if (noRoot) R.string.plus_move_no_root else R.string.plus_move_confirm_message),
@@ -36,9 +40,9 @@ internal fun MoveFromOmalauncherDialog(onDismiss: () -> Unit) {
             val started =
                 MoveFromOmalauncher.start(
                     context,
-                    moving = context.getString(R.string.plus_move_notice_moving),
-                    done = context.getString(R.string.plus_move_notice_done),
-                    failed = context.getString(R.string.plus_move_notice_failed),
+                    moving = noticeMoving,
+                    done = noticeDone,
+                    failed = noticeFailed,
                 )
             waiting = false
             noRoot = !started
